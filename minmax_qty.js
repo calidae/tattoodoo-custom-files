@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    alert('test');
     const qtyInput = document.querySelector('input[name="add_qty"]');
     const form = document.querySelector('form[action*="/shop/cart/update"]');
     if (!qtyInput || !form) return;
