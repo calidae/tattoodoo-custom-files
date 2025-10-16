@@ -125,12 +125,19 @@
     }
 
     function updateModalTotals (modal) {
-        modal.querySelectorAll('tr').forEach(row => {
-            const priceEl = row.querySelector('[name="sale_product_configurator_formatted_price"]');
+        modal.querySelectorAll('tr').forEach((row) => {
+            // Ignorem files dins de taules opcionals
+            if (row.closest('.o_sale_optional_products')) return;
+
+            const priceEl = row.querySelector(
+                '[name="sale_product_configurator_formatted_price"]'
+            );
             const qtyInput = row.querySelector('input[name="sale_quantity"]');
             if (!priceEl || !qtyInput) return;
 
-            const priceText = priceEl.textContent.replace(/[^\d,.-]/g, '').replace(',', '.');
+            const priceText = priceEl.textContent
+                .replace(/[^\d,.-]/g, '')
+                .replace(',', '.');
             const unitPrice = parseFloat(priceText) || 0;
             const qty = parseFloat(qtyInput.value || '1') || 1;
             const total = unitPrice * qty;
@@ -139,7 +146,7 @@
         });
 
         // Recalcular si canvien selects (variants / opcions)
-        modal.querySelectorAll('select').forEach(sel => {
+        modal.querySelectorAll('select').forEach((sel) => {
             if (sel.dataset._totalHooked) return;
             sel.dataset._totalHooked = '1';
             sel.addEventListener('change', () => updateModalTotals(modal));
@@ -147,17 +154,28 @@
     }
 
     function lockQuantities (modal) {
-        modal.querySelectorAll('input[name="sale_quantity"]').forEach(input => {
+        modal.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
+            // Evitem bloquejar els inputs dins de taules opcionals
+            if (input.closest('.o_sale_optional_products')) return;
+
             input.setAttribute('readonly', 'true');
             input.style.pointerEvents = 'none';
             input.style.opacity = '0.5';
         });
-        modal.querySelectorAll(
-            'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
-        ).forEach(btn => { btn.style.display = 'none'; });
+        modal
+            .querySelectorAll(
+                'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
+            )
+            .forEach((btn) => {
+                if (btn.closest('.o_sale_optional_products')) return;
+                btn.style.display = 'none';
+            });
     }
 
     function handleModal (table) {
+        // Ignorem completament les taules opcionals
+        if (table.closest('.o_sale_optional_products')) return;
+
         const modal = table.closest('.modal-body');
         if (!modal || modal.dataset.jsHandled) return;
         modal.dataset.jsHandled = 'true';
@@ -172,33 +190,34 @@
         if (!target) return false;
 
         const observer = new MutationObserver(() => {
-            document.querySelectorAll(
-                '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
-            ).forEach(handleModal);
+            document
+                .querySelectorAll(
+                    '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
+                )
+                .forEach(handleModal);
         });
 
         observer.observe(target, { childList: true, subtree: true });
-        // Primera passada per si el modal ja és al DOM
-        document.querySelectorAll(
-            '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
-        ).forEach(handleModal);
+        // Primera passada per si el modal ja és present
+        document
+            .querySelectorAll(
+                '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
+            )
+            .forEach(handleModal);
 
         LOG('Observer iniciat ✅');
         return true;
     }
 
-    // Boot segur: espera body; si no hi és, torna-ho a provar
     (function boot () {
         if (startObserver()) return;
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => startObserver());
         } else {
-            // fallback per si encara no hi ha body
             const t = setInterval(() => {
                 if (startObserver()) clearInterval(t);
             }, 100);
         }
-        // També en load per si Odoo carrega assets tard
         window.addEventListener('load', () => startObserver());
     })();
 })();
