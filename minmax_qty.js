@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script carregat correctament ✅");
 
-    // 🔁 Esperem fins que el DOM tingui el formulari i el camp de quantitat
-    const checkInterval = setInterval(() => {
+    // Observador per detectar quan Odoo injecta elements nous
+    const observer = new MutationObserver(() => {
         const qtyInput = document.querySelector('input[name="add_qty"]');
         const form = document.querySelector('form[action*="/shop/cart/update"]');
-        if (!qtyInput || !form) return; // Encara no hi és
+        if (!qtyInput || !form) return;
 
-        clearInterval(checkInterval); // Aturem el bucle
         console.log("Camp de quantitat trobat ✅");
+        observer.disconnect(); // aturem l'observador (ja l'hem trobat)
 
         qtyInput.setAttribute("type", "number");
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.value = val;
         });
 
-        // Bloqueig a l’afegir al carro
+        // Bloqueig a l'afegir al carro
         form.addEventListener("submit", function (e) {
             const val = parseInt(qtyInput.value || 0);
             if (val < minQty || val > maxQty) {
@@ -53,5 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
         qtyInput.insertAdjacentElement("afterend", hint);
 
         console.log(`Restriccions aplicades: min=${minQty}, max=${maxQty}`);
-    }, 500); // comprova cada mig segon fins que existeixi
+    });
+
+    // Observem canvis a tot el body
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+    });
 });
