@@ -24,15 +24,17 @@
     ];
 
     function getMinMax (qtyInput) {
-        const minField = document.querySelector('[data-oe-field="x_studio_x_min_qty"]');
-        const maxField = document.querySelector('[data-oe-field="x_studio_x_max_qty"]');
-        const fromStudioMin = minField ? parseInt(minField.textContent.trim()) : NaN;
-        const fromStudioMax = maxField ? parseInt(maxField.textContent.trim()) : NaN;
+        // Busca spans amb text tipus "min-50" o "max-30000"
+        const minSpan = [...document.querySelectorAll('span')]
+            .find(s => s.textContent.trim().toLowerCase().startsWith('min-'));
+        const maxSpan = [...document.querySelectorAll('span')]
+            .find(s => s.textContent.trim().toLowerCase().startsWith('max-'));
 
-        const fromAttrMin = parseInt(qtyInput.getAttribute('data-min'));
-        const minQty = Number.isFinite(fromStudioMin) ? fromStudioMin :
-            Number.isFinite(fromAttrMin) ? fromAttrMin : 1;
-        const maxQty = Number.isFinite(fromStudioMax) ? fromStudioMax : 30000;
+        // Extreu els números, si no hi són posa valors per defecte
+        const minQty = minSpan ? parseInt(minSpan.textContent.replace(/[^0-9]/g, '')) || 1 : 1;
+        const maxQty = maxSpan ? parseInt(maxSpan.textContent.replace(/[^0-9]/g, '')) || 30000 : 30000;
+
+        console.log('🧩 Mínim detectat:', minQty, 'Màxim detectat:', maxQty);
 
         return { minQty, maxQty };
     }
