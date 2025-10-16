@@ -1,6 +1,6 @@
 (function () {
 
-    /* v.15 */
+    /* v.16 */
 
     /* ----------------------------------------- */
     /* Modificar el input del modal de opcionals */
@@ -17,8 +17,6 @@
 
     // 🔹 Calcula i actualitza el total només per UNA fila
     function updateRowTotal (row) {
-        if (row.closest('.o_sale_optional_products')) return; // ignorem opcionals
-
         const priceEl = row.querySelector('[name="sale_product_configurator_formatted_price"]');
         const qtyInput = row.querySelector('input[name="sale_quantity"]');
         if (!priceEl || !qtyInput) return;
@@ -27,32 +25,41 @@
         const unitPrice = parseFloat(priceText) || 0;
         const qty = parseFloat(qtyInput.value || '1') || 1;
 
-        // Calcul del total només per aquesta fila
         const total = unitPrice * qty;
         priceEl.textContent = formatPrice(total);
     }
 
-    // 🔹 Inicialitza una taula: bloqueja quantitats i enganxa esdeveniments
-    function initConfiguratorTable (table) {
-        if (table.closest('.o_sale_optional_products')) return; // ignorem opcionals
-        if (table.dataset.jsHandled) return;
-        table.dataset.jsHandled = 'true';
-
-        LOG('Inicialitzant configurador principal…');
-
-        // Amagar botons i bloquejar quantitats
-        table.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
+    // 🔹 Bloqueja tots els inputs i botons de quantitat (sense excepcions)
+    function lockAllQuantities (modal) {
+        modal.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
             input.setAttribute('readonly', 'true');
             input.style.pointerEvents = 'none';
             input.style.opacity = '0.5';
         });
-        table
+
+        modal
             .querySelectorAll(
                 'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
             )
-            .forEach((btn) => (btn.style.display = 'none'));
+            .forEach((btn) => {
+                btn.style.display = 'none';
+            });
+    }
 
-        // Inicialitzar totals fila a fila
+    // 🔹 Inicialitza una taula: bloqueja quantitats i enganxa esdeveniments locals
+    function initConfiguratorTable (table) {
+        if (table.dataset.jsHandled) return;
+        table.dataset.jsHandled = 'true';
+
+        LOG('Inicialitzant taula de configurador…');
+
+        const modal = table.closest('.modal-body');
+        if (!modal) return;
+
+        // Bloquejar totes les quantitats del modal (no només la taula)
+        lockAllQuantities(modal);
+
+        // Actualitzar totals inicials (fila a fila)
         table.querySelectorAll('tr').forEach((row) => updateRowTotal(row));
 
         // Afegir listener per cada select, però només afecta la seva fila
