@@ -1,6 +1,8 @@
 (function () {
 
+    /* -------------------------------------------------------- */
     /* Ocultar etiquetes min- i max- de la pantalla de producte */
+    /* -------------------------------------------------------- */
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("span").forEach(span => {
             const text = span.textContent.trim().toLowerCase();
@@ -10,7 +12,9 @@
         });
     });
 
-    /* Modificat el input text de quantaitat per un de number amb els valors min- i max- de les etiquetes */
+    /* ------------------------------------------------------------------------------- */
+    /* Modificar el input per un de number amb els valors min- i max- de les etiquetes */
+    /* ------------------------------------------------------------------------------- */
     const QTY_SEL = 'div.css_quantity input[name="add_qty"], input.form-control.quantity[name="add_qty"]';
     const BTN_MINUS = '.css_quantity_minus';
     const BTN_PLUS = '.css_quantity_plus';
@@ -106,12 +110,12 @@
     } else {
         boot();
     }
-})();
 
-(function () {
+    /* ----------------------------------------- */
+    /* Modificar el input del modal de opcionals */
+    /* ----------------------------------------- */
     const LOG = (...a) => console.log('[optional-modal]', ...a);
 
-    // utilitat per formatar el preu com Odoo (amb €)
     function formatPrice (num) {
         return new Intl.NumberFormat('es-ES', {
             style: 'currency',
@@ -120,14 +124,12 @@
         }).format(num);
     }
 
-    // calcula i actualitza els totals
     function updateModalTotals (modal) {
         modal.querySelectorAll('tr').forEach(row => {
             const priceEl = row.querySelector('[name="sale_product_configurator_formatted_price"]');
             const qtyInput = row.querySelector('input[name="sale_quantity"]');
             if (!priceEl || !qtyInput) return;
 
-            // llegeix el preu (text) -> número
             const priceText = priceEl.textContent.replace(/[^\d,.-]/g, '').replace(',', '.');
             const unitPrice = parseFloat(priceText) || 0;
             const qty = parseFloat(qtyInput.value || '1') || 1;
@@ -135,32 +137,68 @@
 
             priceEl.textContent = formatPrice(total);
         });
+
+        // Recalcular si canvien selects (variants / opcions)
+        modal.querySelectorAll('select').forEach(sel => {
+            if (sel.dataset._totalHooked) return;
+            sel.dataset._totalHooked = '1';
+            sel.addEventListener('change', () => updateModalTotals(modal));
+        });
     }
 
-    // amaga i bloqueja controls de quantitat
     function lockQuantities (modal) {
         modal.querySelectorAll('input[name="sale_quantity"]').forEach(input => {
             input.setAttribute('readonly', 'true');
             input.style.pointerEvents = 'none';
             input.style.opacity = '0.5';
         });
-        modal.querySelectorAll('button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]').forEach(btn => {
-            btn.style.display = 'none';
-        });
+        modal.querySelectorAll(
+            'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
+        ).forEach(btn => { btn.style.display = 'none'; });
     }
 
-    // observador per detectar quan apareix el modal
-    const observer = new MutationObserver(() => {
-        document.querySelectorAll('.o_sale_product_configurator_table, .oe_sale_product_configurator_table').forEach(table => {
-            const modal = table.closest('.modal-body');
-            if (!modal || modal.dataset.jsHandled) return; // ja processat
-            modal.dataset.jsHandled = 'true';
+    function handleModal (table) {
+        const modal = table.closest('.modal-body');
+        if (!modal || modal.dataset.jsHandled) return;
+        modal.dataset.jsHandled = 'true';
 
-            LOG('Modal detectat, aplicant canvis...');
-            lockQuantities(modal);
-            updateModalTotals(modal);
+        LOG('Modal detectat, aplicant canvis…');
+        lockQuantities(modal);
+        updateModalTotals(modal);
+    }
+
+    function startObserver () {
+        const target = document.body || document.documentElement;
+        if (!target) return false;
+
+        const observer = new MutationObserver(() => {
+            document.querySelectorAll(
+                '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
+            ).forEach(handleModal);
         });
-    });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(target, { childList: true, subtree: true });
+        // Primera passada per si el modal ja és al DOM
+        document.querySelectorAll(
+            '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
+        ).forEach(handleModal);
+
+        LOG('Observer iniciat ✅');
+        return true;
+    }
+
+    // Boot segur: espera body; si no hi és, torna-ho a provar
+    (function boot () {
+        if (startObserver()) return;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => startObserver());
+        } else {
+            // fallback per si encara no hi ha body
+            const t = setInterval(() => {
+                if (startObserver()) clearInterval(t);
+            }, 100);
+        }
+        // També en load per si Odoo carrega assets tard
+        window.addEventListener('load', () => startObserver());
+    })();
 })();
