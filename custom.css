@@ -1,0 +1,4 @@
+/* 🔧 Ajust camp quantitat */
+.css_quantity input {
+  max-width: none !important;
+}
