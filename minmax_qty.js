@@ -76,13 +76,13 @@
             });
         });
 
-        // Missatge visual sota el camp
-        const hint = document.createElement('div');
-        hint.textContent = `Mínim ${minQty} / Màxim ${maxQty}`;
-        hint.style.fontSize = '13px';
-        hint.style.color = '#888';
-        hint.style.marginTop = '4px';
-        qtyInput.insertAdjacentElement('afterend', hint);
+        // // Missatge visual sota el camp
+        // const hint = document.createElement('div');
+        // hint.textContent = `Mínim ${minQty} / Màxim ${maxQty}`;
+        // hint.style.fontSize = '13px';
+        // hint.style.color = '#888';
+        // hint.style.marginTop = '4px';
+        // qtyInput.insertAdjacentElement('afterend', hint);
 
         LOG("Aplicat", { minQty, maxQty });
         return true;
