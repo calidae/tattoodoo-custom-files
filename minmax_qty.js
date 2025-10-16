@@ -1,4 +1,15 @@
 (function () {
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("span").forEach(span => {
+            const text = span.textContent.trim().toLowerCase();
+            if (text.startsWith("min-") || text.startsWith("max-")) {
+                span.style.display = "none";
+            }
+        });
+    });
+
     const LOG = (...a) => console.log("[minmax]", ...a);
 
     // Selectors
