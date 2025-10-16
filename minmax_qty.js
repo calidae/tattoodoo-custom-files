@@ -1,6 +1,6 @@
 (function () {
 
-
+    /* Ocultar etiquetes min- i max- de la pantalla de producte */
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("span").forEach(span => {
             const text = span.textContent.trim().toLowerCase();
@@ -10,9 +10,7 @@
         });
     });
 
-    const LOG = (...a) => console.log("[minmax]", ...a);
-
-    // Selectors
+    /* Modificat el input text de quantaitat per un de number amb els valors min- i max- de les etiquetes */
     const QTY_SEL = 'div.css_quantity input[name="add_qty"], input.form-control.quantity[name="add_qty"]';
     const BTN_MINUS = '.css_quantity_minus';
     const BTN_PLUS = '.css_quantity_plus';
@@ -23,7 +21,7 @@
         'a.o_wsale_add_to_cart'
     ];
 
-    function getMinMax (qtyInput) {
+    function getMinMax () {
         // Busca spans amb text tipus "min-50" o "max-30000"
         const minSpan = [...document.querySelectorAll('span')]
             .find(s => s.textContent.trim().toLowerCase().startsWith('min-'));
@@ -38,7 +36,6 @@
 
         return { minQty, maxQty };
     }
-
     function clampFactory (qtyInput, minQty, maxQty) {
         return function clamp () {
             let v = parseInt(qtyInput.value || "0");
@@ -49,7 +46,6 @@
             return v;
         };
     }
-
     function setup () {
         const qtyInput = document.querySelector(QTY_SEL);
         if (!qtyInput) return false;
@@ -57,7 +53,7 @@
         // Forcem type=number
         try { qtyInput.type = 'number'; } catch (_) { }
 
-        const { minQty, maxQty } = getMinMax(qtyInput);
+        const { minQty, maxQty } = getMinMax();
         const clamp = clampFactory(qtyInput, minQty, maxQty);
 
         qtyInput.min = String(minQty);
@@ -81,28 +77,14 @@
                     const val = clamp();
                     if (val < minQty || val > maxQty) {
                         e.preventDefault();
-                        alert(`Aquest producte té un mínim de ${minQty} i un màxim de ${maxQty}.`);
                         qtyInput.focus();
-                        LOG("Bloquejat add_to_cart per fora de rang", { val, minQty, maxQty, sel });
                     }
                 }, { capture: true });
             });
         });
-
-        // // Missatge visual sota el camp
-        // const hint = document.createElement('div');
-        // hint.textContent = `Mínim ${minQty} / Màxim ${maxQty}`;
-        // hint.style.fontSize = '13px';
-        // hint.style.color = '#888';
-        // hint.style.marginTop = '4px';
-        // qtyInput.insertAdjacentElement('afterend', hint);
-
-        LOG("Aplicat", { minQty, maxQty });
         return true;
     }
-
     function boot () {
-        LOG("Inici");
         // Intent immediat
         if (setup()) return;
 
@@ -124,4 +106,61 @@
     } else {
         boot();
     }
+})();
+
+(function () {
+    const LOG = (...a) => console.log('[optional-modal]', ...a);
+
+    // utilitat per formatar el preu com Odoo (amb €)
+    function formatPrice (num) {
+        return new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2
+        }).format(num);
+    }
+
+    // calcula i actualitza els totals
+    function updateModalTotals (modal) {
+        modal.querySelectorAll('tr').forEach(row => {
+            const priceEl = row.querySelector('[name="sale_product_configurator_formatted_price"]');
+            const qtyInput = row.querySelector('input[name="sale_quantity"]');
+            if (!priceEl || !qtyInput) return;
+
+            // llegeix el preu (text) -> número
+            const priceText = priceEl.textContent.replace(/[^\d,.-]/g, '').replace(',', '.');
+            const unitPrice = parseFloat(priceText) || 0;
+            const qty = parseFloat(qtyInput.value || '1') || 1;
+            const total = unitPrice * qty;
+
+            priceEl.textContent = formatPrice(total);
+        });
+    }
+
+    // amaga i bloqueja controls de quantitat
+    function lockQuantities (modal) {
+        modal.querySelectorAll('input[name="sale_quantity"]').forEach(input => {
+            input.setAttribute('readonly', 'true');
+            input.style.pointerEvents = 'none';
+            input.style.opacity = '0.5';
+        });
+        modal.querySelectorAll('button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]').forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+
+    // observador per detectar quan apareix el modal
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('.o_sale_product_configurator_table, .oe_sale_product_configurator_table').forEach(table => {
+            const modal = table.closest('.modal-body');
+            if (!modal || modal.dataset.jsHandled) return; // ja processat
+            modal.dataset.jsHandled = 'true';
+
+            LOG('Modal detectat, aplicant canvis...');
+            lockQuantities(modal);
+            updateModalTotals(modal);
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 })();
