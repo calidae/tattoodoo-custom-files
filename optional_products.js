@@ -1,6 +1,6 @@
 (function () {
 
-    /* v.14 */
+    /* v.15 */
 
     /* ----------------------------------------- */
     /* Modificar el input del modal de opcionals */
@@ -15,91 +15,80 @@
         }).format(num);
     }
 
-    function updateModalTotals (modal) {
-        modal.querySelectorAll('tr').forEach((row) => {
-            // Ignorem files dins de taules opcionals
-            if (row.closest('.o_sale_optional_products')) return;
+    // 🔹 Calcula i actualitza el total només per UNA fila
+    function updateRowTotal (row) {
+        if (row.closest('.o_sale_optional_products')) return; // ignorem opcionals
 
-            const priceEl = row.querySelector(
-                '[name="sale_product_configurator_formatted_price"]'
-            );
-            const qtyInput = row.querySelector('input[name="sale_quantity"]');
-            if (!priceEl || !qtyInput) return;
+        const priceEl = row.querySelector('[name="sale_product_configurator_formatted_price"]');
+        const qtyInput = row.querySelector('input[name="sale_quantity"]');
+        if (!priceEl || !qtyInput) return;
 
-            const priceText = priceEl.textContent
-                .replace(/[^\d,.-]/g, '')
-                .replace(',', '.');
-            const unitPrice = parseFloat(priceText) || 0;
-            const qty = parseFloat(qtyInput.value || '1') || 1;
-            const total = unitPrice * qty;
+        const priceText = priceEl.textContent.replace(/[^\d,.-]/g, '').replace(',', '.');
+        const unitPrice = parseFloat(priceText) || 0;
+        const qty = parseFloat(qtyInput.value || '1') || 1;
 
-            priceEl.textContent = formatPrice(total);
-        });
-
-        // Recalcular si canvien selects (variants / opcions)
-        modal.querySelectorAll('select').forEach((sel) => {
-            if (sel.dataset._totalHooked) return;
-            sel.dataset._totalHooked = '1';
-            sel.addEventListener('change', () => updateModalTotals(modal));
-        });
+        // Calcul del total només per aquesta fila
+        const total = unitPrice * qty;
+        priceEl.textContent = formatPrice(total);
     }
 
-    function lockQuantities (modal) {
-        modal.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
-            // Evitem bloquejar els inputs dins de taules opcionals
-            if (input.closest('.o_sale_optional_products')) return;
+    // 🔹 Inicialitza una taula: bloqueja quantitats i enganxa esdeveniments
+    function initConfiguratorTable (table) {
+        if (table.closest('.o_sale_optional_products')) return; // ignorem opcionals
+        if (table.dataset.jsHandled) return;
+        table.dataset.jsHandled = 'true';
 
+        LOG('Inicialitzant configurador principal…');
+
+        // Amagar botons i bloquejar quantitats
+        table.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
             input.setAttribute('readonly', 'true');
             input.style.pointerEvents = 'none';
             input.style.opacity = '0.5';
         });
-        modal
+        table
             .querySelectorAll(
                 'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
             )
-            .forEach((btn) => {
-                if (btn.closest('.o_sale_optional_products')) return;
-                btn.style.display = 'none';
+            .forEach((btn) => (btn.style.display = 'none'));
+
+        // Inicialitzar totals fila a fila
+        table.querySelectorAll('tr').forEach((row) => updateRowTotal(row));
+
+        // Afegir listener per cada select, però només afecta la seva fila
+        table.querySelectorAll('tr select').forEach((sel) => {
+            if (sel.dataset._hooked) return;
+            sel.dataset._hooked = '1';
+            sel.addEventListener('change', (e) => {
+                const row = e.target.closest('tr');
+                if (row) updateRowTotal(row);
             });
+        });
     }
 
-    function handleModal (table) {
-        // Ignorem completament les taules opcionals
-        if (table.closest('.o_sale_optional_products')) return;
-
-        const modal = table.closest('.modal-body');
-        if (!modal || modal.dataset.jsHandled) return;
-        modal.dataset.jsHandled = 'true';
-
-        LOG('Modal detectat, aplicant canvis…');
-        lockQuantities(modal);
-        updateModalTotals(modal);
-    }
-
+    // 🔹 Detecta quan s’injecten taules noves
     function startObserver () {
         const target = document.body || document.documentElement;
         if (!target) return false;
 
         const observer = new MutationObserver(() => {
             document
-                .querySelectorAll(
-                    '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
-                )
-                .forEach(handleModal);
+                .querySelectorAll('.o_sale_product_configurator_table, .oe_sale_product_configurator_table')
+                .forEach(initConfiguratorTable);
         });
 
         observer.observe(target, { childList: true, subtree: true });
-        // Primera passada per si el modal ja és present
+
+        // Primera passada immediata
         document
-            .querySelectorAll(
-                '.o_sale_product_configurator_table, .oe_sale_product_configurator_table'
-            )
-            .forEach(handleModal);
+            .querySelectorAll('.o_sale_product_configurator_table, .oe_sale_product_configurator_table')
+            .forEach(initConfiguratorTable);
 
         LOG('Observer iniciat ✅');
         return true;
     }
 
+    // 🔹 Boot segur
     (function boot () {
         if (startObserver()) return;
         if (document.readyState === 'loading') {
