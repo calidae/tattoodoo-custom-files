@@ -1,6 +1,6 @@
 (function () {
 
-    /* v.16 */
+    /* v.17 */
 
     /* ----------------------------------------- */
     /* Modificar el input del modal de opcionals */
@@ -31,19 +31,27 @@
 
     // 🔹 Bloqueja tots els inputs i botons de quantitat (sense excepcions)
     function lockAllQuantities (modal) {
+        // 🔹 Bloqueja tots els inputs numèrics
         modal.querySelectorAll('input[name="sale_quantity"]').forEach((input) => {
             input.setAttribute('readonly', 'true');
             input.style.pointerEvents = 'none';
             input.style.opacity = '0.5';
         });
 
+        // 🔹 Amaga els botons + i -
         modal
             .querySelectorAll(
                 'button[name="sale_quantity_button_minus"], button[name="sale_quantity_button_plus"]'
             )
             .forEach((btn) => {
-                btn.style.display = 'none';
+                btn.style.setProperty('display', 'none', 'important');
+                btn.style.setProperty('visibility', 'hidden', 'important');
             });
+
+        // 🔹 També amaga el contenidor complet (opcional)
+        modal.querySelectorAll('[name="quantity_buttons_wrapper"]').forEach((wrapper) => {
+            wrapper.style.setProperty('pointer-events', 'none', 'important');
+        });
     }
 
     // 🔹 Inicialitza una taula: bloqueja quantitats i enganxa esdeveniments locals
