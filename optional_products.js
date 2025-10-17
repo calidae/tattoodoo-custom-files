@@ -1,10 +1,8 @@
 (function () {
 
-    /* v.17 */
-
-    /* ----------------------------------------- */
-    /* Modificar el input del modal de opcionals */
-    /* ----------------------------------------- */
+    /* ---------------------------------------------- */
+    /* V.17 Modificar el input del modal de opcionals */
+    /* ---------------------------------------------- */
     const LOG = (...a) => console.log('[optional-modal]', ...a);
 
     function formatPrice (num) {
