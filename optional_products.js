@@ -1,7 +1,7 @@
 (function () {
 
     /* ---------------------------------------------- */
-    /* V.18 Modificar el input del modal de opcionals */
+    /* V.19 Modificar el input del modal de opcionals */
     /* ---------------------------------------------- */
     const LOG = (...a) => console.log('[optional-modal]', ...a);
 
@@ -24,7 +24,7 @@
         const qty = parseFloat(qtyInput.value || '1') || 1;
 
         const total = unitPrice * qty;
-        priceEl.textContent = priceEl.textContent + ' (' + formatPrice(total) + ')';
+        priceEl.textContent = formatPrice(total) + ' (' + priceEl.textContent + ')';
     }
 
     // 🔹 Bloqueja tots els inputs i botons de quantitat (sense excepcions)
