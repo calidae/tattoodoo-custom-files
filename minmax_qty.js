@@ -3,14 +3,21 @@
     /* -------------------------------------------------------- */
     /* Ocultar etiquetes min- i max- de la pantalla de producte */
     /* -------------------------------------------------------- */
-    document.addEventListener("DOMContentLoaded", () => {
+    function hideMinMaxSpans () {
         document.querySelectorAll("span").forEach(span => {
             const text = span.textContent.trim().toLowerCase();
             if (text.startsWith("min-") || text.startsWith("max-")) {
                 span.style.display = "none";
             }
         });
-    });
+    }
+
+    // Executa a l’inici
+    document.addEventListener("DOMContentLoaded", hideMinMaxSpans);
+
+    // I vigila canvis dinàmics (per combos, AJAX, etc.)
+    const hideObserver = new MutationObserver(() => hideMinMaxSpans());
+    hideObserver.observe(document.body, { childList: true, subtree: true });
 
     /* ------------------------------------------------------------------------------- */
     /* Modificar el input per un de number amb els valors min- i max- de les etiquetes */
@@ -45,7 +52,6 @@
         const maxQty = maxSpan ? parseInt(maxSpan.textContent.replace(/[^0-9]/g, '')) || 30000 : 30000;
 
         console.log('🧩 Mínim detectat:', minQty, 'Màxim detectat:', maxQty);
-
         return { minQty, maxQty };
     }
 
@@ -74,30 +80,25 @@
         qtyInput.step = '1';
         clamp();
 
-        // --- Debounce mentre s'escriu ---
         const debouncedClamp = debounce(clamp, TYPING_DEBOUNCE_MS);
         qtyInput.addEventListener('input', debouncedClamp);
-
-        // --- Clamp immediat en sortir o canviar ---
         qtyInput.addEventListener('change', clamp);
         qtyInput.addEventListener('blur', clamp);
 
-        // --- Evitar que Enter recarregui la pàgina ---
+        // Evitar recàrrega amb Enter
         qtyInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 e.stopPropagation();
-                qtyInput.blur(); // opcional: treu el focus
+                qtyInput.blur();
             }
         });
 
-        // --- Plus/Minus Odoo ---
         const minus = document.querySelector(BTN_MINUS);
         const plus = document.querySelector(BTN_PLUS);
         if (minus) minus.addEventListener('click', () => setTimeout(clamp, 0));
         if (plus) plus.addEventListener('click', () => setTimeout(clamp, 0));
 
-        // --- Bloqueig a "Add to cart" ---
         ADD_BTNS.forEach(sel => {
             document.querySelectorAll(sel).forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -115,14 +116,9 @@
 
     function boot () {
         if (setup()) return;
-
         const obs = new MutationObserver(() => { if (setup()) obs.disconnect(); });
         obs.observe(document.body, { childList: true, subtree: true });
-
-        const poll = setInterval(() => {
-            if (setup()) { clearInterval(poll); }
-        }, 300);
-
+        const poll = setInterval(() => { if (setup()) clearInterval(poll); }, 300);
         window.addEventListener('load', () => { setup(); });
     }
 
