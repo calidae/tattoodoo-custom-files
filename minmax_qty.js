@@ -18,7 +18,9 @@
         };
     }
 
-    // Nova funció per decidir el mínim segons el color seleccionat
+    // -----------------------------
+    // Determinar min i max segons color
+    // -----------------------------
     function getMinMax () {
         const colorInputs = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
         const checked = Array.from(colorInputs).find(i => i.checked);
@@ -26,27 +28,24 @@
 
         if (!checked) return { minQty: 1, maxQty };
 
-        const color = checked.getAttribute('data-value-name')?.toLowerCase() || '';
+        const color = (checked.getAttribute('data-value-name') || '').toLowerCase();
 
-        // segons color
-        if (['blanco y negro', 'color'].includes(color)) {
-            return { minQty: 50, maxQty };
-        }
-
-        if (['glitter', 'dorado', 'metalizado', 'luminiscente'].includes(color)) {
-            return { minQty: 2500, maxQty };
-        }
+        if (['blanco y negro', 'color'].includes(color)) return { minQty: 50, maxQty };
+        if (['glitter', 'dorado', 'metalizado', 'luminiscente'].includes(color)) return { minQty: 2500, maxQty };
 
         return { minQty: 1, maxQty };
     }
 
-    function clampFactory (qtyInput, minQty, maxQty) {
+    function clampFactory (qtyInput, getMinMax) {
         return function clamp () {
+            const { minQty, maxQty } = getMinMax();
             let v = parseInt(qtyInput.value || "0");
             if (!Number.isFinite(v)) v = minQty;
             if (v < minQty) v = minQty;
             if (v > maxQty) v = maxQty;
             qtyInput.value = String(v);
+            qtyInput.min = String(minQty);
+            qtyInput.max = String(maxQty);
             return v;
         };
     }
@@ -57,12 +56,7 @@
 
         try { qtyInput.type = 'number'; } catch (_) { }
 
-        const { minQty, maxQty } = getMinMax();
-        const clamp = clampFactory(qtyInput, minQty, maxQty);
-
-        qtyInput.min = String(minQty);
-        qtyInput.max = String(maxQty);
-        qtyInput.step = '1';
+        const clamp = clampFactory(qtyInput, getMinMax);
         clamp();
 
         const debouncedClamp = debounce(clamp, TYPING_DEBOUNCE_MS);
@@ -87,6 +81,7 @@
             document.querySelectorAll(sel).forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const val = clamp();
+                    const { minQty, maxQty } = getMinMax();
                     if (val < minQty || val > maxQty) {
                         e.preventDefault();
                         qtyInput.focus();
@@ -95,14 +90,24 @@
             });
         });
 
-        // 🔄 Quan es canvia el color, actualitzar min i clamp
-        document.querySelectorAll('input[name="ptal-6"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                const { minQty, maxQty } = getMinMax();
-                qtyInput.min = String(minQty);
-                qtyInput.max = String(maxQty);
+        // 🔄 Actualitzar automàticament quan canvia el checked o es creen inputs nous
+        const colorInputsContainer = document.body;
+        const colorObserver = new MutationObserver(() => {
+            clamp(); // recalculem el mínim i màxim si canvien els checked o inputs
+        });
+
+        colorObserver.observe(colorInputsContainer, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['checked']
+        });
+
+        // També escolta canvis directes per seguretat
+        document.addEventListener('change', (e) => {
+            if (e.target && e.target.name === 'ptal-6' && e.target.type === 'radio') {
                 clamp();
-            });
+            }
         });
 
         return true;
