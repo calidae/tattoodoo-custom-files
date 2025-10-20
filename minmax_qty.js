@@ -18,9 +18,7 @@
         };
     }
 
-    // -----------------------------
-    // Determinar min i max segons color
-    // -----------------------------
+    // Determinar min/max segons el color seleccionat
     function getMinMax () {
         const colorInputs = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
         const checked = Array.from(colorInputs).find(i => i.checked);
@@ -90,25 +88,31 @@
             });
         });
 
-        // 🔄 Actualitzar automàticament quan canvia el checked o es creen inputs nous
-        const colorInputsContainer = document.body;
-        const colorObserver = new MutationObserver(() => {
-            clamp(); // recalculem el mínim i màxim si canvien els checked o inputs
+        // 🔄 Quan canvia el color (radio change), actualitzar min i clamp
+        const colorRadios = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
+        colorRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                // deixem que Odoo actualitzi el DOM abans de recalcular
+                setTimeout(() => {
+                    clamp();
+                    console.log('🎨 Color canviat → mínim actualitzat');
+                }, 100);
+            });
         });
 
-        colorObserver.observe(colorInputsContainer, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['checked']
+        // 🔍 Si els inputs apareixen més tard
+        const observer = new MutationObserver(() => {
+            const newRadios = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
+            newRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    setTimeout(() => {
+                        clamp();
+                        console.log('🎨 Color canviat (DOM nou) → mínim actualitzat');
+                    }, 100);
+                });
+            });
         });
-
-        // També escolta canvis directes per seguretat
-        document.addEventListener('change', (e) => {
-            if (e.target && e.target.name === 'ptal-6' && e.target.type === 'radio') {
-                clamp();
-            }
-        });
+        observer.observe(document.body, { childList: true, subtree: true });
 
         return true;
     }
