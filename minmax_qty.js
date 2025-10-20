@@ -25,6 +25,16 @@
         'a.o_wsale_add_to_cart'
     ];
 
+    // Debounce senzill per a l'escriptura
+    const TYPING_DEBOUNCE_MS = 600;
+    function debounce (fn, wait) {
+        let t;
+        return function (...args) {
+            clearTimeout(t);
+            t = setTimeout(() => fn.apply(this, args), wait);
+        };
+    }
+
     function getMinMax () {
         // Busca spans amb text tipus "min-50" o "max-30000"
         const minSpan = [...document.querySelectorAll('span')]
@@ -40,6 +50,7 @@
 
         return { minQty, maxQty };
     }
+
     function clampFactory (qtyInput, minQty, maxQty) {
         return function clamp () {
             let v = parseInt(qtyInput.value || "0");
@@ -50,6 +61,7 @@
             return v;
         };
     }
+
     function setup () {
         const qtyInput = document.querySelector(QTY_SEL);
         if (!qtyInput) return false;
@@ -65,8 +77,13 @@
         qtyInput.step = '1';
         clamp();
 
-        // Lliguem esdeveniments d'entrada
-        ['input', 'change', 'blur'].forEach(ev => qtyInput.addEventListener(ev, () => clamp()));
+        // ✨ Debounce només mentre s'escriu
+        const debouncedClamp = debounce(clamp, TYPING_DEBOUNCE_MS);
+        qtyInput.addEventListener('input', debouncedClamp);
+
+        // Mantén validació immediata en sortir del camp o canviar (Enter, etc.)
+        qtyInput.addEventListener('change', clamp);
+        qtyInput.addEventListener('blur', clamp);
 
         // Lliguem plus/minus (Odoo canvia el valor per JS)
         const minus = document.querySelector(BTN_MINUS);
@@ -88,6 +105,7 @@
         });
         return true;
     }
+
     function boot () {
         // Intent immediat
         if (setup()) return;
