@@ -1,24 +1,5 @@
 (function () {
 
-    /* -------------------------------------------------------- */
-    /* Ocultar etiquetes min- i max- de la pantalla de producte */
-    /* -------------------------------------------------------- */
-    function hideMinMaxSpans () {
-        document.querySelectorAll("span").forEach(span => {
-            const text = span.textContent.trim().toLowerCase();
-            if (text.startsWith("min-") || text.startsWith("max-")) {
-                span.style.display = "none";
-            }
-        });
-    }
-
-    // Executa a l’inici
-    document.addEventListener("DOMContentLoaded", hideMinMaxSpans);
-
-    // I vigila canvis dinàmics (per combos, AJAX, etc.)
-    const hideObserver = new MutationObserver(() => hideMinMaxSpans());
-    hideObserver.observe(document.body, { childList: true, subtree: true });
-
     /* ------------------------------------------------------------------------------- */
     /* Modificar el input per un de number amb els valors min- i max- de les etiquetes */
     /* ------------------------------------------------------------------------------- */
