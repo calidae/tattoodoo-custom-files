@@ -1,8 +1,4 @@
 (function () {
-
-    /* ------------------------------------------------------------------------------- */
-    /* Modificar el input per un de number amb els valors min- i max- de les etiquetes */
-    /* ------------------------------------------------------------------------------- */
     const QTY_SEL = 'div.css_quantity input[name="add_qty"], input.form-control.quantity[name="add_qty"]';
     const BTN_MINUS = '.css_quantity_minus';
     const BTN_PLUS = '.css_quantity_plus';
@@ -13,7 +9,6 @@
         'a.o_wsale_add_to_cart'
     ];
 
-    // Debounce senzill per a l'escriptura
     const TYPING_DEBOUNCE_MS = 600;
     function debounce (fn, wait) {
         let t;
@@ -23,17 +18,26 @@
         };
     }
 
+    // Nova funció per decidir el mínim segons el color seleccionat
     function getMinMax () {
-        const minSpan = [...document.querySelectorAll('span')]
-            .find(s => s.textContent.trim().toLowerCase().startsWith('min-'));
-        const maxSpan = [...document.querySelectorAll('span')]
-            .find(s => s.textContent.trim().toLowerCase().startsWith('max-'));
+        const colorInputs = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
+        const checked = Array.from(colorInputs).find(i => i.checked);
+        const maxQty = 30000;
 
-        const minQty = minSpan ? parseInt(minSpan.textContent.replace(/[^0-9]/g, '')) || 1 : 1;
-        const maxQty = maxSpan ? parseInt(maxSpan.textContent.replace(/[^0-9]/g, '')) || 30000 : 30000;
+        if (!checked) return { minQty: 1, maxQty };
 
-        console.log('🧩 Mínim detectat:', minQty, 'Màxim detectat:', maxQty);
-        return { minQty, maxQty };
+        const color = checked.getAttribute('data-value-name')?.toLowerCase() || '';
+
+        // segons color
+        if (['blanco y negro', 'color'].includes(color)) {
+            return { minQty: 50, maxQty };
+        }
+
+        if (['glitter', 'dorado', 'metalizado', 'luminiscente'].includes(color)) {
+            return { minQty: 2500, maxQty };
+        }
+
+        return { minQty: 1, maxQty };
     }
 
     function clampFactory (qtyInput, minQty, maxQty) {
@@ -66,7 +70,6 @@
         qtyInput.addEventListener('change', clamp);
         qtyInput.addEventListener('blur', clamp);
 
-        // Evitar recàrrega amb Enter
         qtyInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -89,6 +92,16 @@
                         qtyInput.focus();
                     }
                 }, { capture: true });
+            });
+        });
+
+        // 🔄 Quan es canvia el color, actualitzar min i clamp
+        document.querySelectorAll('input[name="ptal-6"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const { minQty, maxQty } = getMinMax();
+                qtyInput.min = String(minQty);
+                qtyInput.max = String(maxQty);
+                clamp();
             });
         });
 
