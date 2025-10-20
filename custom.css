@@ -4,5 +4,5 @@
 }
 
 .o_product_tags {
-  display: none;
+  display: none !important;
 }
