@@ -36,13 +36,11 @@
     }
 
     function getMinMax () {
-        // Busca spans amb text tipus "min-50" o "max-30000"
         const minSpan = [...document.querySelectorAll('span')]
             .find(s => s.textContent.trim().toLowerCase().startsWith('min-'));
         const maxSpan = [...document.querySelectorAll('span')]
             .find(s => s.textContent.trim().toLowerCase().startsWith('max-'));
 
-        // Extreu els números, si no hi són posa valors per defecte
         const minQty = minSpan ? parseInt(minSpan.textContent.replace(/[^0-9]/g, '')) || 1 : 1;
         const maxQty = maxSpan ? parseInt(maxSpan.textContent.replace(/[^0-9]/g, '')) || 30000 : 30000;
 
@@ -66,7 +64,6 @@
         const qtyInput = document.querySelector(QTY_SEL);
         if (!qtyInput) return false;
 
-        // Forcem type=number
         try { qtyInput.type = 'number'; } catch (_) { }
 
         const { minQty, maxQty } = getMinMax();
@@ -77,21 +74,30 @@
         qtyInput.step = '1';
         clamp();
 
-        // ✨ Debounce només mentre s'escriu
+        // --- Debounce mentre s'escriu ---
         const debouncedClamp = debounce(clamp, TYPING_DEBOUNCE_MS);
         qtyInput.addEventListener('input', debouncedClamp);
 
-        // Mantén validació immediata en sortir del camp o canviar (Enter, etc.)
+        // --- Clamp immediat en sortir o canviar ---
         qtyInput.addEventListener('change', clamp);
         qtyInput.addEventListener('blur', clamp);
 
-        // Lliguem plus/minus (Odoo canvia el valor per JS)
+        // --- Evitar que Enter recarregui la pàgina ---
+        qtyInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                qtyInput.blur(); // opcional: treu el focus
+            }
+        });
+
+        // --- Plus/Minus Odoo ---
         const minus = document.querySelector(BTN_MINUS);
         const plus = document.querySelector(BTN_PLUS);
         if (minus) minus.addEventListener('click', () => setTimeout(clamp, 0));
         if (plus) plus.addEventListener('click', () => setTimeout(clamp, 0));
 
-        // Bloqueig a "Add to cart" (pot ser botó JS, no <form>)
+        // --- Bloqueig a "Add to cart" ---
         ADD_BTNS.forEach(sel => {
             document.querySelectorAll(sel).forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -103,23 +109,20 @@
                 }, { capture: true });
             });
         });
+
         return true;
     }
 
     function boot () {
-        // Intent immediat
         if (setup()) return;
 
-        // Observer per injeccions dinàmiques
         const obs = new MutationObserver(() => { if (setup()) obs.disconnect(); });
         obs.observe(document.body, { childList: true, subtree: true });
 
-        // Poll de suport (per SPA/iframes rars)
         const poll = setInterval(() => {
             if (setup()) { clearInterval(poll); }
         }, 300);
 
-        // Reintenta en load també
         window.addEventListener('load', () => { setup(); });
     }
 
