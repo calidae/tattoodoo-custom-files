@@ -28,8 +28,8 @@
 
         const color = (checked.getAttribute('data-value-name') || '').toLowerCase();
 
-        if (['blanco y negro', 'color'].includes(color)) return { minQty: 50, maxQty };
-        if (['glitter', 'dorado', 'metalizado', 'luminiscente'].includes(color)) return { minQty: 2500, maxQty };
+        if (['1 Tinta', 'A todo color'].includes(color)) return { minQty: 50, maxQty };
+        if (['Efecto glitter', 'Efecto dorado', 'Efecto metalizado', 'Efecto luminiscente'].includes(color)) return { minQty: 2500, maxQty };
 
         return { minQty: 1, maxQty };
     }
