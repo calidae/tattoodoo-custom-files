@@ -20,17 +20,24 @@
 
     // Determinar min/max segons el color seleccionat
     function getMinMax () {
-        const colorInputs = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
-        const checked = Array.from(colorInputs).find(i => i.checked);
         let minQty = 1;
         const maxQty = 30000;
 
+        const attrList = document.querySelector('ul[data-attribute-id="1"]');
+        if (!attrList) return { minQty, maxQty };
+
+        const checked = attrList.querySelector('input[type="radio"]:checked');
         if (!checked) return { minQty, maxQty };
 
-        const color = (checked.getAttribute('data-value-name') || '').toLowerCase();
+        const val = checked.value;
 
-        if (['1 Tinta', 'A todo color'].includes(color)) return { minQty: 50, maxQty };
-        if (['Efecto glitter', 'Efecto dorado', 'Efecto metalizado', 'Efecto luminiscente'].includes(color)) return { minQty: 2500, maxQty };
+        // Si value és 32 o 33 → min 50, sinó min 2500
+        if (val === '32' || val === '33') {
+            minQty = 50;
+        } else {
+            minQty = 2500;
+        }
+
         return { minQty, maxQty };
     }
 
