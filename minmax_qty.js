@@ -22,16 +22,16 @@
     function getMinMax () {
         const colorInputs = document.querySelectorAll('input[name="ptal-6"][type="radio"]');
         const checked = Array.from(colorInputs).find(i => i.checked);
+        let minQty = 1;
         const maxQty = 30000;
 
-        if (!checked) return { minQty: 1, maxQty };
+        if (!checked) return { minQty, maxQty };
 
         const color = (checked.getAttribute('data-value-name') || '').toLowerCase();
 
         if (['1 Tinta', 'A todo color'].includes(color)) return { minQty: 50, maxQty };
         if (['Efecto glitter', 'Efecto dorado', 'Efecto metalizado', 'Efecto luminiscente'].includes(color)) return { minQty: 2500, maxQty };
-
-        return { minQty: 1, maxQty };
+        return { minQty, maxQty };
     }
 
     function clampFactory (qtyInput, getMinMax) {
