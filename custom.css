@@ -2,3 +2,6 @@
 .css_quantity input {
   max-width: none !important;
 }
+.js_blog.website_blog nav {
+  display: none;
+}
