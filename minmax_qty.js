@@ -22,15 +22,15 @@
     const TRANSLATIONS = {
         'es-ES': {
             quantity: 'Cantidad:',
-            message: 'A partir de {min} unidades por diseño (podrás añadir uno o varios diseños durante el proceso)'
+            message: 'A partir de {min} unidades por diseño (Podrás añadir uno o varios diseños durante el proceso)'
         },
         'ca-ES': {
             quantity: 'Quantitat:',
-            message: 'A partir de {min} unitats per disseny (podràs afegir-ne un o més durant el procés)'
+            message: 'A partir de {min} unitats per disseny (Podràs afegir-ne un o més durant el procés)'
         },
         'nl-NL': {
             quantity: 'Hoeveelheid:',
-            message: 'Vanaf {min} eenheden per ontwerp (u kunt tijdens het proces één of meer ontwerpen toevoegen)'
+            message: 'Vanaf {min} eenheden per ontwerp (U kunt tijdens het proces één of meer ontwerpen toevoegen)'
         },
         'fr-FR': {
             quantity: 'Quantité:',
@@ -42,11 +42,11 @@
         },
         'it-IT': {
             quantity: 'Quantità:',
-            message: 'A partire da {min} unità per design (potrai aggiungerne uno o più durante il processo)'
+            message: 'A partire da {min} unità per design (Potrai aggiungerne uno o più durante il processo)'
         },
         'pt-PT': {
             quantity: 'Quantidade:',
-            message: 'A partir de {min} unidades por design (poderá adicionar um ou vários durante o processo)'
+            message: 'A partir de {min} unidades por design (Poderá adicionar um ou vários durante o processo)'
         }
     };
 
@@ -55,7 +55,7 @@
         const lang = document.documentElement.lang || 'en';
         return TRANSLATIONS[lang] || {
             quantity: 'Quantity:',
-            message: 'From {min} units per design (you can add one or more designs during the process)'
+            message: 'From {min} units per design (You can add one or more designs during the process)'
         };
     }
 
