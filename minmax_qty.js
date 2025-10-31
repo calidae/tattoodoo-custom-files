@@ -18,16 +18,88 @@
         };
     }
 
-    // Determinar min/max segons el color seleccionat
-    function getMinMax () {
+    // Traduccions del missatge de quantitat mínima
+    const TRANSLATIONS = {
+        'es-ES': {
+            quantity: 'Cantidad:',
+            message: 'A partir de {min} unidades por diseño (podrás añadir uno o varios diseños durante el proceso)'
+        },
+        'ca-ES': {
+            quantity: 'Quantitat:',
+            message: 'A partir de {min} unitats per disseny (podràs afegir-ne un o més durant el procés)'
+        },
+        'nl-NL': {
+            quantity: 'Hoeveelheid:',
+            message: 'Vanaf {min} eenheden per ontwerp (u kunt tijdens het proces één of meer ontwerpen toevoegen)'
+        },
+        'fr-FR': {
+            quantity: 'Quantité:',
+            message: 'À partir de {min} unités par design (vous pourrez en ajouter un ou plusieurs pendant le processus)'
+        },
+        'de-DE': {
+            quantity: 'Menge:',
+            message: 'Ab {min} Einheiten pro Design (Sie können während des Prozesses ein oder mehrere Designs hinzufügen)'
+        },
+        'it-IT': {
+            quantity: 'Quantità:',
+            message: 'A partire da {min} unità per design (potrai aggiungerne uno o più durante il processo)'
+        },
+        'pt-PT': {
+            quantity: 'Quantidade:',
+            message: 'A partir de {min} unidades por design (poderá adicionar um ou vários durante o processo)'
+        }
+    };
+
+    // Obtindre l'idioma actual
+    function getLanguage () {
+        const lang = document.documentElement.lang || 'en';
+        return TRANSLATIONS[lang] || {
+            quantity: 'Quantity:',
+            message: 'From {min} units per design (you can add one or more designs during the process)'
+        };
+    }
+
+    // Crear o actualitzar el missatge de quantitat mínima
+    function updateMinMessage () {
+        const { minQty } = getMin();
+
+        // No mostrar missatge si el mínim és 1
+        if (minQty === 1) {
+            const existingMsg = document.querySelector('#min_qty_message');
+            if (existingMsg) existingMsg.remove();
+            return;
+        }
+
+        const langData = getLanguage();
+
+        // Cercar el contenidor del bloc add_to_cart
+        const wrapper = document.querySelector('#add_to_cart_wrap');
+        if (!wrapper) return;
+
+        // Cercar si ja existeix el missatge
+        let msgContainer = document.querySelector('#min_qty_message');
+
+        if (!msgContainer) {
+            // Crear el contenidor del missatge
+            msgContainer = document.createElement('div');
+            msgContainer.id = 'min_qty_message';
+            msgContainer.className = 'min-qty-message mb-2 w-100';
+            wrapper.insertBefore(msgContainer, wrapper.firstChild);
+        }
+
+        // Actualitzar el contingut
+        msgContainer.innerHTML = '<span class="attribute_value">' + langData.message.replace('{min}', minQty) + '</span>';
+    }
+
+    // Determinar min segons el color seleccionat
+    function getMin () {
         let minQty = 1;
-        const maxQty = 30000;
 
         const attrList = document.querySelector('ul[data-attribute-id="1"]');
-        if (!attrList) return { minQty, maxQty };
+        if (!attrList) return { minQty };
 
         const checked = attrList.querySelector('input[type="radio"]:checked');
-        if (!checked) return { minQty, maxQty };
+        if (!checked) return { minQty };
 
         const val = checked.value;
 
@@ -38,19 +110,17 @@
             minQty = 2500;
         }
 
-        return { minQty, maxQty };
+        return { minQty };
     }
 
-    function clampFactory (qtyInput, getMinMax) {
+    function clampFactory (qtyInput, getMin) {
         return function clamp () {
-            const { minQty, maxQty } = getMinMax();
+            const { minQty } = getMin();
             let v = parseInt(qtyInput.value || "0");
             if (!Number.isFinite(v)) v = minQty;
             if (v < minQty) v = minQty;
-            if (v > maxQty) v = maxQty;
             qtyInput.value = String(v);
             qtyInput.min = String(minQty);
-            qtyInput.max = String(maxQty);
             return v;
         };
     }
@@ -61,8 +131,9 @@
 
         try { qtyInput.type = 'number'; } catch (_) { }
 
-        const clamp = clampFactory(qtyInput, getMinMax);
+        const clamp = clampFactory(qtyInput, getMin);
         clamp();
+        updateMinMessage();
 
         const debouncedClamp = debounce(clamp, TYPING_DEBOUNCE_MS);
         qtyInput.addEventListener('input', debouncedClamp);
@@ -86,8 +157,8 @@
             document.querySelectorAll(sel).forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const val = clamp();
-                    const { minQty, maxQty } = getMinMax();
-                    if (val < minQty || val > maxQty) {
+                    const { minQty } = getMin();
+                    if (val < minQty) {
                         e.preventDefault();
                         qtyInput.focus();
                     }
@@ -102,6 +173,7 @@
                 // deixem que Odoo actualitzi el DOM abans de recalcular
                 setTimeout(() => {
                     clamp();
+                    updateMinMessage();
                     console.log('🎨 Color canviat → mínim actualitzat');
                 }, 100);
             });
@@ -114,6 +186,7 @@
                 radio.addEventListener('change', () => {
                     setTimeout(() => {
                         clamp();
+                        updateMinMessage();
                         console.log('🎨 Color canviat (DOM nou) → mínim actualitzat');
                     }, 100);
                 });
