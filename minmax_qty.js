@@ -81,14 +81,14 @@
 
         if (!msgContainer) {
             // Crear el contenidor del missatge
-            msgContainer = document.createElement('div');
+            msgContainer = document.createElement('h6');
             msgContainer.id = 'min_qty_message';
-            msgContainer.className = 'min-qty-message mb-2 w-100';
+            msgContainer.className = 'order-first min-qty-message attribute_name mb-2';
             wrapper.insertBefore(msgContainer, wrapper.firstChild);
         }
 
         // Actualitzar el contingut
-        msgContainer.innerHTML = '<span class="attribute_value">' + langData.message.replace('{min}', minQty) + '</span>';
+        msgContainer.innerHTML = '<span>' + langData.quantity + '</span><span class="text-muted">' + langData.message.replace('{min}', minQty) + '</span>';
     }
 
     // Determinar min segons el color seleccionat
