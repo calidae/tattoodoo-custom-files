@@ -21,32 +21,32 @@
     // Traduccions del missatge de quantitat mínima
     const TRANSLATIONS = {
         'es-ES': {
-            quantity: 'Cantidad:',
-            message: 'A partir de {min} unidades por diseño (Podrás añadir uno o varios diseños durante el proceso)'
+            quantity: 'Cantidad',
+            message: ' - A partir de {min} unidades por diseño (Podrás añadir uno o varios diseños durante el proceso)'
         },
         'ca-ES': {
-            quantity: 'Quantitat:',
-            message: 'A partir de {min} unitats per disseny (Podràs afegir-ne un o més durant el procés)'
+            quantity: 'Quantitat',
+            message: ' - A partir de {min} unitats per disseny (Podràs afegir-ne un o més durant el procés)'
         },
         'nl-NL': {
-            quantity: 'Hoeveelheid:',
-            message: 'Vanaf {min} eenheden per ontwerp (U kunt tijdens het proces één of meer ontwerpen toevoegen)'
+            quantity: 'Hoeveelheid',
+            message: ' - Vanaf {min} eenheden per ontwerp (U kunt tijdens het proces één of meer ontwerpen toevoegen)'
         },
         'fr-FR': {
-            quantity: 'Quantité:',
-            message: 'À partir de {min} unités par design (vous pourrez en ajouter un ou plusieurs pendant le processus)'
+            quantity: 'Quantité',
+            message: ' - À partir de {min} unités par design (vous pourrez en ajouter un ou plusieurs pendant le processus)'
         },
         'de-DE': {
-            quantity: 'Menge:',
-            message: 'Ab {min} Einheiten pro Design (Sie können während des Prozesses ein oder mehrere Designs hinzufügen)'
+            quantity: 'Menge',
+            message: ' - Ab {min} Einheiten pro Design (Sie können während des Prozesses ein oder mehrere Designs hinzufügen)'
         },
         'it-IT': {
-            quantity: 'Quantità:',
-            message: 'A partire da {min} unità per design (Potrai aggiungerne uno o più durante il processo)'
+            quantity: 'Quantità',
+            message: ' - A partire da {min} unità per design (Potrai aggiungerne uno o più durante il processo)'
         },
         'pt-PT': {
-            quantity: 'Quantidade:',
-            message: 'A partir de {min} unidades por design (Poderá adicionar um ou vários durante o processo)'
+            quantity: 'Quantidade',
+            message: ' - A partir de {min} unidades por design (Poderá adicionar um ou vários durante o processo)'
         }
     };
 
@@ -54,8 +54,8 @@
     function getLanguage () {
         const lang = document.documentElement.lang || 'en';
         return TRANSLATIONS[lang] || {
-            quantity: 'Quantity:',
-            message: 'From {min} units per design (You can add one or more designs during the process)'
+            quantity: 'Quantity',
+            message: ' - From {min} units per design (You can add one or more designs during the process)'
         };
     }
 
