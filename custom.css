@@ -8,3 +8,14 @@
 .coupon_form {
   display: none;
 }
+.custom-products .card-body {
+  padding: 0;
+}
+.custom-products .card-title{
+  padding: 0;
+}
+.custom-products .card-title a {
+  padding: 40px 20px;
+  display: block;
+  text-align: left;
+}
