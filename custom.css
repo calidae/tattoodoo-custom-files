@@ -27,26 +27,59 @@
   cursor: pointer;
 }
 
-html #products_grid .oe_currency_value::after,
-html #product_details .oe_currency_value::after {
+html #product_details .oe_price::after {
   content: " VAT excluded";
   font-size: 0.8em;
   color: #666;
   margin-left: 4px;
 }
 
-html[lang="es-ES"] #products_grid .oe_currency_value::after,
-html[lang="es-ES"] #product_details .oe_currency_value::after {
+html[lang="es-ES"] #product_details .oe_price::after {
   content: " IVA no incluido";
   font-size: 0.8em;
   color: #666;
   margin-left: 4px;
 }
 
-html[lang="ca-ES"] #products_grid .oe_currency_value::after,
-html[lang="ca-ES"] #product_details .oe_currency_value::after {
+html[lang="ca-ES"] #product_details .oe_price::after {
   content: " IVA no inclòs";
   font-size: 0.8em;
   color: #666;
   margin-left: 4px;
 }
+
+html[lang="nl-NL"] #product_details .oe_price::after {
+  content: " excl. btw";
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 4px;
+}
+
+html[lang="fr-FR"] #product_details .oe_price::after {
+  content: " HT";
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 4px;
+}
+
+html[lang="de-DE"] #product_details .oe_price::after {
+  content: " zzgl. MwSt.";
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 4px;
+}
+
+html[lang="it-IT"] #product_details .oe_price::after {
+  content: " IVA esclusa";
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 4px;
+}
+
+html[lang="pt-PT"] #product_details .oe_price::after {
+  content: " s/ IVA";
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 4px;
+}
+ 
