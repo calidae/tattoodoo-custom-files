@@ -101,10 +101,13 @@ header .o_main_nav {
   white-space: nowrap !important;
 }
 
-#footer form div[data-type="boolean"] .form-check {
+#footer section.s_website_form form div[data-type="boolean"] .form-check {
   display: inline-block;
 }
-#footer form div[data-type="boolean"] .form-check + div {
+#footer section.s_website_form form div[data-type="boolean"] .form-check + div {
   display: inline-block;
   vertical-align: middle;
+}
+#footer section.s_website_form + p {
+  display: none;
 }
