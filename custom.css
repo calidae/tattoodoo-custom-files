@@ -85,3 +85,14 @@ html[lang="pt-PT"] #product_details .oe_price::after {
 #wrapwrap:not(.o_header_overlay) header .js_language_selector .dropdown-item span {
   color: #000 !important;
 }
+
+.o_main_nav {
+    flex-direction: column-reverse;
+    display: flex;
+}
+.o_header_sales_one_bot {
+  background-color: #000;
+}
+.o_header_sales_one_bot > ul > li > div{
+  justify-content: space-between;
+}
