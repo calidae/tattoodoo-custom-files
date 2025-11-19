@@ -83,5 +83,5 @@ html[lang="pt-PT"] #product_details .oe_price::after {
   margin-left: 4px;
 }
 #wrapwrap:not(.o_header_overlay) header .js_language_selector .dropdown-item span {
-  color: #000;
+  color: #000 !important;
 }
