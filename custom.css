@@ -88,15 +88,15 @@ html[lang="pt-PT"] #product_details .oe_price::after {
 
 header .o_main_nav {
   flex-direction: column-reverse !important;
-  display: flex;
+  display: flex !important;
 }
 .o_header_sales_one_bot {
-  background-color: #000;
+  background-color: #000 !important;
 }
 .o_header_sales_one_bot > ul > li > div{
-  justify-content: space-between;
+  justify-content: space-between !important;
 }
 .o_header_sales_one_bot a {
-  color: #fff;
-  white-space: nowrap;
+  color: #fff !important;
+  white-space: nowrap !important;
 }
