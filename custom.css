@@ -82,3 +82,6 @@ html[lang="pt-PT"] #product_details .oe_price::after {
   color: #666;
   margin-left: 4px;
 }
+#wrapwrap:not(.o_header_overlay) header .js_language_selector span {
+  color: #000 !important;
+}
