@@ -100,3 +100,11 @@ header .o_main_nav {
   color: #fff !important;
   white-space: nowrap !important;
 }
+
+#footer form div[data-type="boolean"] .form-check {
+  display: inline-block;
+}
+#footer form div[data-type="boolean"] .form-check + div {
+  display: inline-block;
+  vertical-align: middle;
+}
