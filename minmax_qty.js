@@ -96,13 +96,18 @@
         const path = window.location.pathname;
         const parts = path.split("-");
         const productId = parts[parts.length - 1];
-        if (productId === "11") { return 50; };
-        if (productId === "7") { return 50; };
-        if (productId === "12") { return 2500; };
-        if (productId === "13") { return 2500; };
-        if (productId === "14") { return 2500; };
-        if (productId === "15") { return 2500; };
-        return 1;
+
+        const map = {
+            "11": 50,
+            "7": 50,
+            "12": 2500,
+            "13": 2500,
+            "14": 2500,
+            "15": 2500
+        };
+
+        const minQty = map[productId] ?? 1;
+        return { minQty };
     }
 
     function clampFactory (qtyInput, getMin) {
