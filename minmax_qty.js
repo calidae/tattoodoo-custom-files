@@ -93,24 +93,16 @@
 
     // Determinar min segons el color seleccionat
     function getMin () {
-        let minQty = 1;
-
-        const attrList = document.querySelector('ul[data-attribute-id="1"]');
-        if (!attrList) return { minQty };
-
-        const checked = attrList.querySelector('input[type="radio"]:checked');
-        if (!checked) return { minQty };
-
-        const val = checked.value;
-
-        // Si value és 32 o 33 → min 50, sinó min 2500
-        if (val === '32' || val === '33') {
-            minQty = 50;
-        } else {
-            minQty = 2500;
-        }
-
-        return { minQty };
+        const path = window.location.pathname;
+        const parts = path.split("-");
+        const productId = parts[parts.length - 1];
+        if (productId === "11") { return 50; };
+        if (productId === "7") { return 50; };
+        if (productId === "12") { return 2500; };
+        if (productId === "13") { return 2500; };
+        if (productId === "14") { return 2500; };
+        if (productId === "15") { return 2500; };
+        return 1;
     }
 
     function clampFactory (qtyInput, getMin) {
