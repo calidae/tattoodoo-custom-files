@@ -115,7 +115,12 @@ header .o_main_nav {
 .s_card.card.o_cc .card-body {
   position: absolute;
   height: 100%;
+  width: 99%;
   align-content: center;
-  text-align: left;
-  justify-items: start;
+}
+.s_card.card.o_cc .card-body * {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
 }
