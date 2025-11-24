@@ -124,9 +124,9 @@ header .o_main_nav {
   width: 100%;
   align-items: center;
 }
-.o_builder_open .s_card.card.o_cc .card-body {
+.editor_enable .s_card.card.o_cc .card-body {
   width: auto;
 }
-.o_builder_open .s_card.card.o_cc .card-body * {
+.editor_enable .s_card.card.o_cc .card-body * {
   width: auto;
 }
