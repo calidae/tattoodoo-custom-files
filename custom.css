@@ -111,3 +111,12 @@ header .o_main_nav {
 #footer section.s_website_form + p {
   display: none;
 }
+
+.s_car.card .card-body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  text-align: left;
+  justify-items: start;
+}
