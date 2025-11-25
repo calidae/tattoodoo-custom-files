@@ -130,3 +130,11 @@ header .o_main_nav {
 .editor_enable .s_card.card.o_cc .card-body * {
   width: auto;
 }
+
+form[data-model_name="mailing.contact"] .form-check {
+  display:inline-block !important;
+}
+form[data-model_name="mailing.contact"] .form-check + .form-text {
+  display:inline-block !important;
+    vertical-align: middle !important;
+}
