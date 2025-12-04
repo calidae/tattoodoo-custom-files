@@ -138,3 +138,7 @@ form[data-model_name="mailing.contact"] .form-check + .form-text {
   display:inline-block !important;
     vertical-align: middle !important;
 }
+
+header .oe_structure .container p {
+  margin-bottom: 0;
+}
