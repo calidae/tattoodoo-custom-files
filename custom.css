@@ -144,3 +144,7 @@ form[data-model_name="res.partner"] .form-check + .form-text {
 header .oe_structure .container p {
   margin-bottom: 0;
 }
+
+.modal-content .btn {
+  white-space: nowrap !important;
+}
