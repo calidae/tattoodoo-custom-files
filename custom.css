@@ -131,10 +131,12 @@ header .o_main_nav {
   width: auto;
 }
 
-form[data-model_name="mailing.contact"] .form-check {
+form[data-model_name="mailing.contact"] .form-check,
+form[data-model_name="res.partner"] .form-check {
   display:inline-block !important;
 }
-form[data-model_name="mailing.contact"] .form-check + .form-text {
+form[data-model_name="mailing.contact"] .form-check + .form-text,
+form[data-model_name="res.partner"] .form-check + .form-text {
   display:inline-block !important;
     vertical-align: middle !important;
 }
