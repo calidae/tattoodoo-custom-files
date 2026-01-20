@@ -75,4 +75,10 @@
             }
         }, 500);
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            document.querySelectorAll("#portal_connect_software_modal_btn")
+                .forEach(btn => btn.style.display = "none");
+        }, 500);
+    });
 })();
