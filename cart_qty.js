@@ -60,7 +60,7 @@
     })();
 
     document.addEventListener("DOMContentLoaded", function () {
-        LOG('------>')
+        LOG('------>>')
         setTimeout(() => {
             const path = window.location.pathname;
             if (path.match(/^\/([a-z]{2}\/)?shop(\/category\/tatuatges-temporals-personalitzats-7)?\/?$/)) {
@@ -75,7 +75,7 @@
                 const observer = new MutationObserver(hideAddToCart);
                 observer.observe(document.body, { childList: true, subtree: true });
             }
-        }, 100);
-        LOG('<------')
+        }, 1000);
+        LOG('<<------')
     });
 })();
