@@ -61,20 +61,21 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         LOG('------>')
-        const path = window.location.pathname;
-        LOG(path)
-        if (path.match(/^\/([a-z]{2}\/)?shop(\/category\/tatuatges-temporals-personalitzats-7)?\/?$/)) {
-            LOG(document.querySelectorAll("o_wsale_product_btn"))
-            function hideAddToCart () {
-                document.querySelectorAll("o_wsale_product_btn")
-                    .forEach(btn => btn.style.display = "none");
+        setTimeout(() => {
+            const path = window.location.pathname;
+            if (path.match(/^\/([a-z]{2}\/)?shop(\/category\/tatuatges-temporals-personalitzats-7)?\/?$/)) {
+                LOG(document.querySelectorAll(".o_wsale_product_btn"))
+                function hideAddToCart () {
+                    document.querySelectorAll(".o_wsale_product_btn")
+                        .forEach(btn => btn.style.display = "none");
+                }
+                // Amaga al carregar
+                hideAddToCart();
+                // Observa canvis al DOM (AJAX) i amaga de nou si apareixen botons
+                const observer = new MutationObserver(hideAddToCart);
+                observer.observe(document.body, { childList: true, subtree: true });
             }
-            // Amaga al carregar
-            hideAddToCart();
-            // Observa canvis al DOM (AJAX) i amaga de nou si apareixen botons
-            const observer = new MutationObserver(hideAddToCart);
-            observer.observe(document.body, { childList: true, subtree: true });
-        }
+        }, 100);
         LOG('<------')
     });
 })();
