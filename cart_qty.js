@@ -62,6 +62,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         const path = window.location.pathname;
         if (path.match(/^\/([a-z]{2}\/)?shop(\/category\/tatuatges-temporals-personalitzats-7)?\/?$/)) {
+            console.log('------>')
             function hideAddToCart () {
                 document.querySelectorAll("o_wsale_product_btn")
                     .forEach(btn => btn.style.display = "none");
@@ -71,6 +72,7 @@
             // Observa canvis al DOM (AJAX) i amaga de nou si apareixen botons
             const observer = new MutationObserver(hideAddToCart);
             observer.observe(document.body, { childList: true, subtree: true });
+            console.log('<------')
         }
     });
 })();
