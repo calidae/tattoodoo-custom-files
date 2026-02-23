@@ -1,35 +1,62 @@
 <t t-name="sale.report_saleorder_document">
     <t t-call="web.external_layout">
+        <style>
+            div[name="information_block"] {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+        </style>
         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
         <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat" />
         <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
-        <t t-set="address" t-if="not doc.partner_invoice_id and not doc.partner_shipping_id">
-            <div t-field="doc.partner_id" class="mb-0"
-                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}" />
-            <p t-if="doc.partner_id.vat" class="mb-0">
-                <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
-                    t-out="doc.company_id.account_fiscal_country_id.vat_label" />
-                <t t-else="">NIF</t>: <span t-field="doc.partner_id.vat" />
-            </p>
+        <t t-set="address">
+            <t t-if="doc.partner_id and not doc.partner_invoice_id and not doc.partner_shipping_id">
+                <div t-field="doc.partner_id" class="mb-0"
+                    t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}" />
+                <p t-if="doc.partner_id.vat" class="mb-0">
+                    <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                        t-out="doc.company_id.account_fiscal_country_id.vat_label" />
+                    <t t-else="">NIF</t>: <span t-field="doc.partner_id.vat" />
+                </p>
+            </t>
+            <t t-else="">
+                <p />
+            </t>
         </t>
-        <t
-            t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
+        <t t-if="doc.partner_invoice_id or doc.partner_shipping_id">
             <t t-set="information_block">
-                <strong>
-                    <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
-                        Dirección de facturación y envío
+                <div class="row">
+                    <div class="col-6">
+                        <strong>
+                            <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                                Dirección de facturación y envío
+                            </t>
+                            <t t-else="">
+                                Dirección de facturación
+                            </t>
+                        </strong>
+                        <div t-field="doc.partner_invoice_id"
+                            t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
+                        <p t-if="doc.partner_invoice_id.vat" class="mb-0">
+                            <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                                t-out="doc.company_id.account_fiscal_country_id.vat_label" />
+                            <t t-else="">NIF</t>: <span t-field="doc.partner_invoice_id.vat" />
+                        </p>
+                    </div>
+                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                        <div class="col-6">
+                            <strong class="d-block mt-3">Dirección de envío</strong>
+                            <div t-field="doc.partner_shipping_id"
+                                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
+                            <p t-if="doc.partner_shipping_id.vat" class="mb-0">
+                                <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                                    t-out="doc.company_id.account_fiscal_country_id.vat_label" />
+                                <t t-else="">NIF</t>: <span t-field="doc.partner_shipping_id.vat" />
+                            </p>
+                        </div>
                     </t>
-                    <t t-else="">
-                        Dirección de facturación
-                    </t>
-                </strong>
-                <div t-field="doc.partner_invoice_id"
-                    t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
-                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
-                    <strong class="d-block mt-3">Dirección de envío</strong>
-                    <div t-field="doc.partner_shipping_id"
-                        t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
-                </t>
+                </div>
             </t>
         </t>
         <div class="page">
@@ -37,7 +64,7 @@
 
             <t t-set="is_proforma" t-value="env.context.get('proforma', False) or is_pro_forma" />
             <t t-set="layout_document_title">
-                <span t-if="is_proforma">Número de factura proforma </span>
+                <span t-if="is_proforma">Proforma #</span>
                 <span t-elif="doc.state in ['draft','sent']">Presupuesto # </span>
                 <span t-else="">Pedido nº </span>
                 <span t-field="doc.name">SO0000</span>
