@@ -64,6 +64,16 @@ body {
   width: 70%;
 }
 
+/* Accordion */
+.accordion-header {
+}
+
+/* Footer */
+footer {
+  margin: 1rem;
+  border-radius: 1.5rem;
+}
+
 /* Opiniones */
 .s_blockquote {
 }
