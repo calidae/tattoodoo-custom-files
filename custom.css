@@ -66,17 +66,20 @@ body {
 
 /* Opiniones */
 .s_blockquote {
-  border-radius: 1rem !important;
 }
 .s_blockquote_infos {
   position: absolute;
 }
+.s_blockquote_author {
+  line-height: 22px;
+}
 .s_rating_icons {
   position: absolute;
+  top: 1rem;
   right: 1rem;
 }
-.s_blockquote:nth-child(4) {
-  margin-top: 2rem !important;
+.s_blockquote > div:nth-child(3) {
+  margin-top: 3rem !important;
 }
 
 /* 🔧 Ajust camp quantitat */
