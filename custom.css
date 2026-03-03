@@ -94,8 +94,8 @@ footer {
   border-radius: 1.5rem;
 }
 
-.row {
-  --gutter-x: 30px !important;
+.container .row {
+  --gutter-x: 60px !important;
 }
 form .btn {
   /* width: 100% !important; */
