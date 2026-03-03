@@ -21,7 +21,7 @@ body {
   padding-left: 2rem;
   margin: 5px 0;
 }
-.s_cta_badge {
+/* .s_cta_badge {
   width: 587px;
   display: flex !important;
   flex-direction: column;
@@ -59,7 +59,7 @@ body {
 .s_cta_badge span {
   display: block;
   width: 70%;
-}
+} */
 
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
