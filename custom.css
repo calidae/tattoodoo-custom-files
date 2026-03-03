@@ -101,8 +101,12 @@ form .btn {
 }
 div[data-type="boolean"] {
   display: flex !important;
-  align-items: center !important;
+  line-height: 18px;
 }
+div[data-type="boolean"] .form-text {
+  margin-top: 0 !important;
+}
+
 /* Opiniones */
 .s_blockquote {
 }
