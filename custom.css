@@ -306,3 +306,11 @@ b,
 strong {
   font-weight: bolder !important;
 }
+
+/*
+Product details
+*/
+
+#product_details {
+  background-color: transparent !important;
+}
