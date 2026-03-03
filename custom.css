@@ -27,11 +27,15 @@ body {
   border: 3px solid white;
   color: white !important;
 }
+.s_cta_badge a {
+  color: white !important;
+}
 .s_cta_badge + .s_cta_badge {
   margin-top: 1rem;
 }
 .s_cta_badge:hover {
   background-color: white;
+  color: black !important;
   text-decoration: none;
   cursor: pointer;
 }
