@@ -26,6 +26,13 @@ body {
   padding-left: 2rem;
   margin: 5px 0;
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .s_cta_badge {
+    width: 100%;
+  }
+}
 .s_cta_badge {
   width: 587px;
   display: flex !important;
