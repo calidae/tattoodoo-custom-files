@@ -314,13 +314,3 @@ Product details
 #product_details {
   background-color: transparent !important;
 }
-
-@media (min-width: 992px) {
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container,
-  .o_container_small {
-    max-width: 1400px;
-  }
-}
