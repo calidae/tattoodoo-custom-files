@@ -13,7 +13,7 @@ body {
   padding-left: 0;
 }
 .s_cover li {
-  background-image: url(/images/check.svg);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>');
   background-repeat: no-repeat;
   background-position: left center;
   padding-left: 2rem;
