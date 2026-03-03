@@ -29,12 +29,16 @@ body {
   background-color: transparent;
   border: 3px solid white;
   color: white !important;
+  position: relative;
 }
 .s_cta_badge a {
   color: white !important;
   text-decoration: none;
   align-self: flex-end;
   justify-self: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 18px;
 }
 .s_cta_badge + .s_cta_badge {
