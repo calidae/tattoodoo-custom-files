@@ -75,6 +75,9 @@ body {
   position: absolute;
   right: 1rem;
 }
+.s_blockquote:nth-child(4) {
+  margin-top: 2rem !important;
+}
 
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
