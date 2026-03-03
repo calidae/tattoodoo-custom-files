@@ -4,9 +4,14 @@ body {
 }
 
 /* Hero Cover */
-section {
+.s_form_aside,
+.s_cover {
   border-radius: 1.5rem;
   margin: 1rem;
+}
+.s_form_aside {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 .s_cover ul {
   list-style: none;
