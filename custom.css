@@ -8,6 +8,32 @@ body {
   border-radius: 1.5rem;
   margin: 1rem;
 }
+.s_cover ul {
+  list-style: none;
+  padding-left: 0;
+}
+.s_cover li {
+  background-image: url(/images/check.svg);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 2rem;
+}
+.s_cta_badge {
+  width: 400px;
+  display: block;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: transparent;
+  border: 3px solid white;
+}
+.s_cta_badge + .s_cta_badge {
+  margin-top: 1rem;
+}
+.s_cta_badge:hover {
+  background-color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
@@ -182,4 +208,9 @@ header .oe_structure .container p {
 
 .o_configurator_price_total {
   font-size: 1.5em;
+}
+
+b,
+strong {
+  font-weight: 600 !important;
 }
