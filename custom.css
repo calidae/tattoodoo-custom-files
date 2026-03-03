@@ -40,6 +40,9 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+.s_cta_badge:hover a {
+  color: black !important;
+}
 
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
