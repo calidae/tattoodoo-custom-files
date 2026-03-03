@@ -80,6 +80,11 @@ body {
 
 /* Accordion */
 .accordion-header {
+  padding: 1rem 0rem !important;
+}
+.accordion-header p {
+  margin: 0 !important;
+  line-height: 1.5rem;
 }
 
 /* Footer */
