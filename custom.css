@@ -25,6 +25,7 @@ body {
   border-radius: 1rem;
   background-color: transparent;
   border: 3px solid white;
+  color: white !important;
 }
 .s_cta_badge + .s_cta_badge {
   margin-top: 1rem;
