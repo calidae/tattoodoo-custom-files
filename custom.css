@@ -1,3 +1,14 @@
+/* Body */
+body {
+  background-color: #f0eee9;
+}
+
+/* Hero Cover */
+.s_cover {
+  border-radius: 1.5rem;
+  margin: 1rem;
+}
+
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
   max-width: none !important;
@@ -89,7 +100,11 @@ html[lang="pt-PT"] #product_details .oe_price::after {
   margin-left: 4px;
 }
 
-#wrapwrap:not(.o_header_overlay) header .js_language_selector .dropdown-item span {
+#wrapwrap:not(.o_header_overlay)
+  header
+  .js_language_selector
+  .dropdown-item
+  span {
   color: #000 !important;
 }
 
@@ -102,7 +117,7 @@ header .o_main_nav {
   background-color: #000 !important;
 }
 
-.o_header_sales_one_bot>ul>li>div {
+.o_header_sales_one_bot > ul > li > div {
   justify-content: space-between !important;
 }
 
@@ -115,12 +130,12 @@ header .o_main_nav {
   display: inline-block;
 }
 
-#footer section.s_website_form form div[data-type="boolean"] .form-check+div {
+#footer section.s_website_form form div[data-type="boolean"] .form-check + div {
   display: inline-block;
   vertical-align: middle;
 }
 
-#footer section.s_website_form+p {
+#footer section.s_website_form + p {
   display: none;
 }
 
@@ -151,8 +166,8 @@ form[data-model_name="res.partner"] .form-check {
   display: inline-block !important;
 }
 
-form[data-model_name="mailing.contact"] .form-check+.form-text,
-form[data-model_name="res.partner"] .form-check+.form-text {
+form[data-model_name="mailing.contact"] .form-check + .form-text,
+form[data-model_name="res.partner"] .form-check + .form-text {
   display: inline-block !important;
   vertical-align: middle !important;
 }
