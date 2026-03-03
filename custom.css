@@ -47,12 +47,6 @@ body {
   overflow: hidden;
 }
 
-@media (max-width: 767px) {
-  .s_cta_badge.d-inline-block {
-    max-width: 100% !important;
-  }
-}
-
 .s_cta_badge a {
   color: white !important;
   text-decoration: none;
@@ -64,6 +58,15 @@ body {
   font-size: 18px;
 }
 
+@media (max-width: 767px) {
+  .s_cta_badge.d-inline-block {
+    max-width: 100% !important;
+  }
+  .s_cta_badge a {
+    top: 100%;
+    transform: translateY(-150%);
+  }
+}
 .s_cta_badge:hover {
   background-color: white;
   color: black !important;
