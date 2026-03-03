@@ -72,6 +72,8 @@ body {
 }
 .s_blockquote_author {
   line-height: 22px;
+  margin-top: 5px;
+  margin-left: 10px;
 }
 .s_rating_icons {
   position: absolute;
