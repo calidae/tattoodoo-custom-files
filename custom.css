@@ -4,7 +4,7 @@ body {
 }
 
 /* Hero Cover */
-.s_cover {
+section {
   border-radius: 1.5rem;
   margin: 1rem;
 }
