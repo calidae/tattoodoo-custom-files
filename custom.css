@@ -80,6 +80,10 @@ footer {
 form .btn {
   width: 100% !important;
 }
+div[data-type="boolean"] {
+  display: flex !important;
+  align-items: center !important;
+}
 /* Opiniones */
 .s_blockquote {
 }
