@@ -64,6 +64,18 @@ body {
   width: 70%;
 }
 
+/* Opiniones */
+.s_blockquote {
+  border-radius: 1rem !important;
+}
+.s_blockquote_infos {
+  position: absolute;
+}
+.s_rating_icons {
+  position: absolute;
+  right: 1rem;
+}
+
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
   max-width: none !important;
