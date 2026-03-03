@@ -56,6 +56,11 @@ body {
   color: black !important;
 }
 
+.s_cta_badge span {
+  display: block;
+  width: 70%;
+}
+
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
   max-width: none !important;
