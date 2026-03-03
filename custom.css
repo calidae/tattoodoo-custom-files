@@ -98,7 +98,7 @@ footer {
   --gutter-x: 30px !important;
 }
 form .btn {
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 div[data-type="boolean"] {
   display: flex !important;
@@ -314,4 +314,15 @@ Product details
 
 #product_details {
   background-color: transparent !important;
+}
+
+.navbar {
+  background-color: white;
+  color: black;
+}
+.nav-link {
+  color: black !important;
+}
+.navbar a {
+  color: black;
 }
