@@ -28,23 +28,30 @@ body {
 }
 
 /* Mobile responsive */
-@media (max-width: 768px) {
-  .s_cta_badge {
-    width: 100%;
-  }
-}
-.s_cta_badge {
-  width: 587px;
+
+.s_cta_badge.d-inline-block {
   display: flex !important;
+  width: 100% !important;
+  max-width: 587px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1.5rem;
-  border-radius: 1rem;
+  padding: 1.5rem !important;
+  border-radius: 1rem !important;
   background-color: transparent;
-  border: 3px solid white;
+  border: 3px solid white !important;
   color: white !important;
   position: relative;
+  overflow: hidden;
 }
+
+@media (max-width: 767px) {
+  .s_cta_badge.d-inline-block {
+    max-width: 100% !important;
+  }
+}
+
 .s_cta_badge a {
   color: white !important;
   text-decoration: none;
