@@ -21,7 +21,7 @@ body {
 }
 .s_cta_badge {
   width: 587px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
@@ -35,6 +35,7 @@ body {
   text-decoration: none;
   align-self: flex-end;
   justify-self: center;
+  font-size: 18px;
 }
 .s_cta_badge + .s_cta_badge {
   margin-top: 1rem;
