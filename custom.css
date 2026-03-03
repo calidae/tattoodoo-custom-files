@@ -97,9 +97,10 @@ footer {
 .container .row {
   --gutter-x: 60px !important;
 }
-form .btn {
-  /* width: 100% !important; */
+.container form .btn {
+  width: 100% !important;
 }
+
 div[data-type="boolean"] {
   display: flex !important;
   line-height: 18px;
