@@ -343,3 +343,7 @@ Product details
     border-radius: 40px;
   }
 }
+
+.text-muted {
+  line-height: 20px;
+}
