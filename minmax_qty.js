@@ -64,8 +64,14 @@
             wrapper.insertBefore(msg, wrapper.firstChild);
         }
 
-        msg.innerHTML =
-            `<span>${lang.quantity}</span><span class="text-muted">${lang.message.replace('{min}', minQty)}</span>`;
+        msg.textContent = '';
+        const spanQty = document.createElement('span');
+        spanQty.textContent = lang.quantity;
+        const spanMsg = document.createElement('span');
+        spanMsg.className = 'text-muted';
+        spanMsg.textContent = lang.message.replace('{min}', minQty);
+        msg.appendChild(spanQty);
+        msg.appendChild(spanMsg);
     }
 
     function clampFactory (qtyInput) {
