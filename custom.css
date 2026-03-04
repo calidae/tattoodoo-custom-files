@@ -137,7 +137,8 @@ div[data-type="boolean"] .form-text {
 
 /* 🔧 Ajust camp quantitat */
 .css_quantity input {
-  max-width: none !important;
+  max-width: 217px !important;
+  width: 217px !important;
 }
 
 .js_blog.website_blog nav {
