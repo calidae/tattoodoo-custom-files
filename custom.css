@@ -379,3 +379,8 @@ Product details
   background-color: rgba(255, 255, 255, 0.5) !important;
   backdrop-filter: blur(10px);
 }
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #f0eee9 !important;
+}
