@@ -363,10 +363,12 @@ Product details
   background-color: white;
   border-radius: 1rem !important;
 }
-
+#wrapwrap:not(.o_header_overlay) header .badge {
+  color: #fff !important;
+}
 .badge,
 .o_filter_tag {
-  background: #0ab0d2 !important;
-  border: none;
+  background: #ed2a20 !important;
+  border: none !important;
   color: white !important;
 }
