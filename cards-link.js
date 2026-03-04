@@ -1,12 +1,24 @@
+function isEditing() {
+  return (
+    document.body.classList.contains("o_builder_open") ||
+    document.querySelector(".o_snippets-menu") !== null ||
+    document.querySelector(
+      ".o_we_website_top_actions .btn-primary[data-action='save']",
+    ) !== null
+  );
+}
+
 document.querySelectorAll(".s_cta_badge").forEach(function (badge) {
   badge.style.cursor = "pointer";
   badge.addEventListener("click", function (e) {
-    if (document.body.classList.contains("o_builder_open")) {
-    } else {
-      if (e.target.tagName === "A") return;
-      var link = badge.querySelector("a");
-      if (link) link.click();
+    if (isEditing()) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
     }
+    if (e.target.tagName === "A") return;
+    var link = badge.querySelector("a");
+    if (link) link.click();
   });
 });
 
@@ -17,10 +29,12 @@ document
     if (!link) return;
     el.style.cursor = "pointer";
     el.addEventListener("click", function (e) {
-      if (document.body.classList.contains("o_builder_open")) {
-      } else {
-        if (e.target.closest("a")) return;
-        window.location.href = link.href;
+      if (isEditing()) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
       }
+      if (e.target.closest("a")) return;
+      window.location.href = link.href;
     });
   });
