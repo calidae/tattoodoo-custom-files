@@ -92,7 +92,7 @@ body {
 }
 
 /* Footer */
-footer {
+footer:not(.modal-content footer) {
   margin: 1rem;
   border-radius: 1.5rem;
 }
