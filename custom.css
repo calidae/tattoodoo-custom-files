@@ -98,7 +98,7 @@ footer {
 }
 
 .container .row {
-  --gutter-x: 60px !important;
+  --gutter-x: 30px !important;
 }
 .container form .btn {
   width: 100% !important;
