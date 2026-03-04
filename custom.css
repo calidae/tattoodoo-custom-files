@@ -343,10 +343,11 @@ Product details
     border-radius: 40px;
   }
 }
-.nav-link active {
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #c3c3c3 !important;
   color: white !important;
 }
-
 .text-muted {
   line-height: 20px;
 }
@@ -363,8 +364,7 @@ Product details
   background-color: white;
   border-radius: 1rem !important;
 }
-#wrapwrap:not(.o_header_overlay) header .badge,
-#wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link.active {
+#wrapwrap:not(.o_header_overlay) header .badge {
   color: #fff !important;
 }
 .badge,
