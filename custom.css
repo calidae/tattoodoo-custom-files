@@ -333,3 +333,13 @@ Product details
 .navbar a {
   color: black;
 } */
+
+@media (min-width: 992px) {
+  :where(header#top)
+    .navbar-nav:where([role="menu"])
+    .nav-link:not(.o_nav-link_secondary) {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 40px;
+  }
+}
