@@ -347,3 +347,16 @@ Product details
 .text-muted {
   line-height: 20px;
 }
+
+.input-group > .form-control,
+.input-group > .form-select,
+.input-group > .form-floating {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+}
+
+#o_wsale_cta_wrapper {
+  background-color: white;
+  border-radius: 1rem !important;
+}
