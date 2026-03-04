@@ -363,3 +363,10 @@ Product details
   background-color: white;
   border-radius: 1rem !important;
 }
+
+.badge,
+.o_filter_tag {
+  background: #0ab0d2 !important;
+  border: none;
+  color: white !important;
+}
