@@ -364,7 +364,7 @@ Product details
   border-radius: 1rem !important;
 }
 #wrapwrap:not(.o_header_overlay) header .badge,
-#wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link .active {
+#wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link.active {
   color: #fff !important;
 }
 .badge,
