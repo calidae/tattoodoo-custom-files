@@ -2,13 +2,11 @@ document.querySelectorAll(".s_cta_badge").forEach(function (badge) {
   badge.style.cursor = "pointer";
   badge.addEventListener("click", function (e) {
     if (document.body.classList.contains("o_builder_open")) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
+    } else {
+      if (e.target.tagName === "A") return;
+      var link = badge.querySelector("a");
+      if (link) link.click();
     }
-    if (e.target.tagName === "A") return;
-    var link = badge.querySelector("a");
-    if (link) link.click();
   });
 });
 
@@ -20,11 +18,9 @@ document
     el.style.cursor = "pointer";
     el.addEventListener("click", function (e) {
       if (document.body.classList.contains("o_builder_open")) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
+      } else {
+        if (e.target.closest("a")) return;
+        window.location.href = link.href;
       }
-      if (e.target.closest("a")) return;
-      window.location.href = link.href;
     });
   });
