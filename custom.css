@@ -97,8 +97,11 @@ footer {
   border-radius: 1.5rem;
 }
 
-.container .row {
-  --gutter-x: 30px !important;
+.s_form_aside .container .row {
+  --gutter-x: 60px !important;
+}
+.o_editable_media {
+  border-radius: 1.5rem !important;
 }
 .container form .btn {
   width: 100% !important;
