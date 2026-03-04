@@ -345,11 +345,7 @@ Product details
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: #c3c3c3 !important;
-}
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  color: white !important;
+  background-color: #f0eee9 !important;
 }
 
 .text-muted {
