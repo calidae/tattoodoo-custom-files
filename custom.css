@@ -341,8 +341,10 @@ Product details
     .nav-link:not(.o_nav-link_secondary) {
     padding: 0.3rem 1.5rem;
     border-radius: 40px;
-    color: white !important;
   }
+}
+.nav-link active {
+  color: white !important;
 }
 
 .text-muted {
