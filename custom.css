@@ -363,7 +363,8 @@ Product details
   background-color: white;
   border-radius: 1rem !important;
 }
-#wrapwrap:not(.o_header_overlay) header .badge {
+#wrapwrap:not(.o_header_overlay) header .badge,
+#wrapwrap:not(.o_header_overlay) header .nav-item > .nav-link > * {
   color: #fff !important;
 }
 .badge,
@@ -371,4 +372,5 @@ Product details
   background: #ed2a20 !important;
   border: none !important;
   color: white !important;
+  font-weight: normal;
 }
