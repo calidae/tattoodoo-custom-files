@@ -396,3 +396,13 @@ Product details
   --btn-color: #000 !important;
   --btn-border-color: #000 !important;
 }
+.o_header_mobile_buttons_wrap {
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+}
+.navbar-toggler-icon {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
