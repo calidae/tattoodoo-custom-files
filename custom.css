@@ -1,4 +1,8 @@
 /* Body */
+
+:root {
+  --dropdown-link-active-color: black !important;
+}
 body {
   background-color: #f0eee9;
 }
@@ -347,7 +351,7 @@ Product details
 .nav-pills .show > .nav-link {
   background-color: #f0eee9 !important;
 }
-.navbar-light .dropdown-menu .dropdown-item.active {
+.dropdown-item.active span {
   color: black !important;
 }
 
