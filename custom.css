@@ -391,3 +391,8 @@ Product details
 .dropdown-item:active {
   background-color: #f0eee9 !important;
 }
+
+.btn-outline-primary {
+  --btn-color: #000 !important;
+  --btn-border-color: #000 !important;
+}
