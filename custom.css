@@ -347,6 +347,9 @@ Product details
 .nav-pills .show > .nav-link {
   background-color: #f0eee9 !important;
 }
+.navbar-light .dropdown-menu .dropdown-item.active {
+  color: black !important;
+}
 
 .text-muted {
   line-height: 20px;
