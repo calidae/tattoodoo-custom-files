@@ -23,7 +23,32 @@
             `option[value^="${normalized.split("_")[0]}_"]`,
           );
         if (option) {
-          langSelect.value = option.value;
+          const targetValue = option.value;
+
+          function setLang() {
+            if (langSelect.value !== targetValue) {
+              langSelect.value = targetValue;
+            }
+          }
+
+          // Set immediately
+          setLang();
+
+          // Watch for Odoo scripts that may reset the select after load
+          const observer = new MutationObserver(setLang);
+          observer.observe(langSelect, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+          });
+
+          // Stop observing once the user interacts with the select
+          langSelect.addEventListener("change", () => observer.disconnect(), {
+            once: true,
+          });
+
+          // Also stop observing after 10s to avoid interference long-term
+          setTimeout(() => observer.disconnect(), 10000);
         }
       }
     }
