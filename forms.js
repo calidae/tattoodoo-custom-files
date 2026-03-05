@@ -23,7 +23,24 @@
             `option[value^="${normalized.split("_")[0]}_"]`,
           );
         if (option) {
-          langSelect.value = option.value;
+          const targetValue = option.value;
+          langSelect.value = targetValue;
+
+          // Odoo JS loads after and resets the select value.
+          // Poll to re-apply until stable or user interacts.
+          const interval = setInterval(() => {
+            if (langSelect.value !== targetValue) {
+              langSelect.value = targetValue;
+            }
+          }, 200);
+
+          // Stop polling once the user manually changes the select
+          langSelect.addEventListener("change", () => clearInterval(interval), {
+            once: true,
+          });
+
+          // Stop polling after 10s regardless
+          setTimeout(() => clearInterval(interval), 10000);
         }
       }
     }
