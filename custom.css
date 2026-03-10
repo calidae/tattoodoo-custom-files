@@ -70,6 +70,9 @@ body {
     max-width: 100% !important;
     padding: 1.5rem 1.5rem 0rem 1.5rem !important;
   }
+  .s_features .row {
+    --gutter-y: 30px !important;
+  }
   .s_cta_badge a {
     margin-top: 2rem;
     top: 100%;
