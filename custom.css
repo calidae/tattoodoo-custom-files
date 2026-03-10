@@ -73,6 +73,7 @@ body {
   }
   .s_cta_badge span {
     line-height: 20px;
+    width: 100% !important;
   }
   .s_company_team_detail .btn {
     width: 100% !important;
