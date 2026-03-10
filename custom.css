@@ -71,6 +71,13 @@ body {
     top: 100%;
     transform: translateY(-150%);
   }
+  .s_company_team_detail .btn {
+    width: 100% !important;
+  }
+  .o_we_custom_image {
+    height: 200px !important;
+    object-fit: cover !important;
+  }
 }
 .s_cta_badge:hover {
   background-color: white;
