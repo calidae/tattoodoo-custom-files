@@ -67,6 +67,7 @@ body {
     max-width: 100% !important;
   }
   .s_cta_badge a {
+    margin-top: 1rem;
     top: 100%;
     transform: translateY(-150%);
   }
