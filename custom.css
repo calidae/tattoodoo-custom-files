@@ -105,7 +105,8 @@ body {
     text-align: center !important;
     padding: 0 1rem !important;
   }
-  [data-name*="Formulario"] {
+
+  [data-name*="Formulario"] .row {
     --gutter-y: 0px !important;
   }
 
