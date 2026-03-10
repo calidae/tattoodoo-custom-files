@@ -138,8 +138,8 @@ body {
     text-align: center !important;
   }
   .s_rating_icons {
-    position: relative;
-    margin-left: 4rem;
+    position: relative !important;
+    margin-left: 4rem !important;
   }
 }
 .s_cta_badge:hover {
