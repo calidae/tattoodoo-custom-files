@@ -78,7 +78,7 @@ body {
   .s_company_team_detail .btn {
     width: 100% !important;
   }
-  .o_we_custom_image {
+  .s_company_team_detail .o_we_custom_image {
     height: 200px !important;
     object-fit: cover !important;
   }
