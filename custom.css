@@ -71,6 +71,9 @@ body {
     top: 100%;
     transform: translateY(-150%);
   }
+  .s_cta_badge span {
+    line-height: 20px;
+  }
   .s_company_team_detail .btn {
     width: 100% !important;
   }
