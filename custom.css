@@ -63,13 +63,17 @@ body {
 }
 
 @media (max-width: 767px) {
+  .s_cover {
+    padding: 1rem 2rem !important;
+  }
   .s_cta_badge.d-inline-block {
     max-width: 100% !important;
   }
   .s_cta_badge a {
     margin-top: 2rem;
     top: 100%;
-    transform: translateY(-150%);
+    position: relative;
+    /* transform: translateY(-150%); */
   }
   .s_cta_badge span {
     line-height: 20px;
