@@ -105,6 +105,9 @@ body {
     text-align: center !important;
     padding: 0 1rem !important;
   }
+  footer {
+    text-align: center !important;
+  }
 }
 .s_cta_badge:hover {
   background-color: white;
