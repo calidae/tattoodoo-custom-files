@@ -106,7 +106,7 @@ body {
     padding: 0 1rem !important;
   }
 
-  [data-name*="Formulario"] .row {
+  [data-name="Formulario"] .row {
     --gutter-y: 0px !important;
   }
 
