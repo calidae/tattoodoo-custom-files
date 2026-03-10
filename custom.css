@@ -99,8 +99,7 @@ body {
     padding: 2rem !important;
   }
 
-  section[data-name="Funciones"] .s_features .row,
-  section[data-name="Funciones"] .s_form_aside .row {
+  [data-name*="Funciones"] .row {
     text-align: center !important;
     padding: 0 1rem !important;
   }
