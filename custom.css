@@ -68,6 +68,7 @@ body {
   }
   .s_cta_badge.d-inline-block {
     max-width: 100% !important;
+    padding: 1.5rem 1.5rem 0rem 1.5rem !important;
   }
   .s_cta_badge a {
     margin-top: 2rem;
