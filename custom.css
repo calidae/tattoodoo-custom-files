@@ -82,6 +82,9 @@ body {
     height: 200px !important;
     object-fit: cover !important;
   }
+  .s_form_aside {
+    padding: 2rem !important;
+  }
 }
 .s_cta_badge:hover {
   background-color: white;
