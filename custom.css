@@ -105,6 +105,10 @@ body {
     text-align: center !important;
     padding: 0 1rem !important;
   }
+  [data-name*="Formulario"] {
+    --gutter-y: 0px !important;
+  }
+
   footer {
     text-align: center !important;
   }
