@@ -141,6 +141,9 @@ body {
     position: relative !important;
     margin-left: 4rem !important;
   }
+  footer .container p {
+    text-align: center !important;
+  }
 }
 .s_cta_badge:hover {
   background-color: white;
