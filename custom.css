@@ -99,6 +99,9 @@ body {
     padding: 2rem !important;
   }
 
+  [data-name*="Funciones"] {
+    margin-bottom: 2rem !important;
+  }
   [data-name*="Funciones"] .row {
     text-align: center !important;
     padding: 0 1rem !important;
