@@ -5,18 +5,6 @@
 
   const LOG = (...a) => console.log("[cart-lock]", ...a);
 
-  var checkbox = document.getElementById("website_sale_tc_checkbox");
-  var button = document.getElementById("o_payment_submit_button");
-
-  if (!checkbox || !button) {
-    console.warn("No se encontró el checkbox o el botón");
-    return;
-  }
-
-  checkbox.onchange = function () {
-    button.disabled = !this.checked;
-  };
-
   function lockCartQuantities() {
     const cart = document.querySelector("#shop_cart, #cart_products");
     if (!cart) return false;
@@ -94,6 +82,18 @@
         const observer = new MutationObserver(hideAddToCart);
         observer.observe(document.body, { childList: true, subtree: true });
       }
+
+      var checkbox = document.getElementById("website_sale_tc_checkbox");
+      var button = document.getElementById("o_payment_submit_button");
+
+      if (!checkbox || !button) {
+        console.warn("No se encontró el checkbox o el botón");
+        return;
+      }
+
+      checkbox.onchange = function () {
+        button.disabled = !this.checked;
+      };
     }, 500);
   });
   document.addEventListener("DOMContentLoaded", function () {
