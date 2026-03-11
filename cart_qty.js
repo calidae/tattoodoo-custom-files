@@ -1,3 +1,4 @@
+import { Dialog } from "@web/core/dialog/dialog";
 (function () {
   /* --------------------------------------------------------------- */
   /* v.1 – Bloqueja quantitats i amaga + / - a la pàgina del carretó */
