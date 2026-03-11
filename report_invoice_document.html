@@ -152,6 +152,10 @@
                         <strong>Referencia</strong>
                         <div t-field="o.ref">INV/2023/00001</div>
                     </div>
+                    <div class="col" t-if="o.invoice_line_ids.sale_line_ids.order_id.project_id.name" name="lot">
+                        <strong>Lote cosmético</strong>
+                        <div t-field="o.invoice_line_ids.sale_line_ids.order_id.project_id.name">Lote XYZ</div>
+                    </div>
                     <div class="col" t-if="o.invoice_incoterm_id" name="incoterm_id">
                         <strong>Incoterm</strong>
                         <div t-if="o.incoterm_location">
