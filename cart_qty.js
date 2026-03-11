@@ -1,4 +1,3 @@
-import { Dialog } from "@web/core/dialog/dialog";
 (function () {
   /* --------------------------------------------------------------- */
   /* v.1 – Bloqueja quantitats i amaga + / - a la pàgina del carretó */
@@ -88,16 +87,9 @@ import { Dialog } from "@web/core/dialog/dialog";
           return;
         }
 
-        Dialog.add(this.env, {
-          title: "dsadsa",
-          body: "ddsadsadsa",
-          buttons: [
-            {
-              text: "Ok",
-              primary: true,
-              close: true,
-            },
-          ],
+        this.env.services.dialog.add(Dialog, {
+          title: "Hello",
+          body: "Esto es un diálogo en Odoo",
         });
 
         if (e.target.checked) {
