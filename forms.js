@@ -45,12 +45,16 @@
       }
     }
 
-    document.getElementById("website_sale_tc_checkbox").onchange = function () {
-      if (this.checked) {
-        document.getElementById("o_payment_submit_button").disabled = false;
-      } else {
-        document.getElementById("o_payment_submit_button").disabled = true;
-      }
+    var checkbox = document.getElementById("website_sale_tc_checkbox");
+    var button = document.getElementById("o_payment_submit_button");
+
+    if (!checkbox || !button) {
+      console.warn("No se encontró el checkbox o el botón");
+      return;
+    }
+
+    checkbox.onchange = function () {
+      button.disabled = !this.checked;
     };
   });
 })();
