@@ -64,7 +64,6 @@
   })();
 
   // --- T&C checkbox → habilitar/deshabilitar botón de pago ---
-  // Usa event delegation: no importa si Odoo re-renderiza el botón
   (function initTCCheckbox() {
     document.addEventListener("change", function (e) {
       if (e.target && e.target.id === "website_sale_tc_checkbox") {
@@ -72,18 +71,7 @@
           "button[type='submit'][name='o_payment_submit_button']",
         );
 
-        LOG("TC checkbox cambiado:", e.target.checked, "Botón:", button);
-
         if (!button) {
-          LOG("⚠️ Botón de pago no encontrado. Selectores disponibles:");
-          LOG(
-            "  [name]:",
-            document.querySelectorAll("[name*='payment']").length,
-          );
-          LOG(
-            "  .o_payment:",
-            document.querySelectorAll("[class*='o_payment']").length,
-          );
           return;
         }
 
@@ -94,25 +82,6 @@
         }
       }
     });
-
-    // Alert si clica el botón con el checkbox desmarcado
-    document.addEventListener(
-      "click",
-      function (e) {
-        var button = e.target.closest(
-          "button[type='submit'][name='o_payment_submit_button']",
-        );
-        if (!button) return;
-
-        var checkbox = document.getElementById("website_sale_tc_checkbox");
-        if (checkbox && !checkbox.checked) {
-          e.preventDefault();
-          e.stopPropagation();
-          alert("Has d'acceptar els termes i condicions abans de continuar.");
-        }
-      },
-      true,
-    );
 
     LOG("TC checkbox listener (delegado) registrado ✅");
   })();
