@@ -92,7 +92,12 @@
       }
 
       checkbox.onchange = function () {
-        button.disabled = !this.checked;
+        console.log("Checkbox cambiado:", checkbox.checked);
+        if (checkbox.checked) {
+          button.removeAttribute("disabled");
+        } else {
+          button.setAttribute("disabled", "true");
+        }
       };
     }, 500);
   });
