@@ -44,17 +44,5 @@
         }
       }
     }
-
-    var checkbox = document.getElementById("website_sale_tc_checkbox");
-    var button = document.getElementById("o_payment_submit_button");
-
-    if (!checkbox || !button) {
-      console.warn("No se encontró el checkbox o el botón");
-      return;
-    }
-
-    checkbox.onchange = function () {
-      button.disabled = !this.checked;
-    };
   });
 })();
