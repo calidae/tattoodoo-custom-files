@@ -87,6 +87,18 @@
           return;
         }
 
+        Dialog.add(this.env, {
+          title: "dsadsa",
+          body: "ddsadsadsa",
+          buttons: [
+            {
+              text: "Ok",
+              primary: true,
+              close: true,
+            },
+          ],
+        });
+
         if (e.target.checked) {
           button.removeAttribute("disabled");
         } else {
