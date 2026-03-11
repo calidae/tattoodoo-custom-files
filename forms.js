@@ -44,5 +44,13 @@
         }
       }
     }
+
+    document.getElementById("website_sale_tc_checkbox").onchange = function () {
+      if (this.checked) {
+        document.getElementById("o_payment_submit_button").disabled = false;
+      } else {
+        document.getElementById("o_payment_submit_button").disabled = true;
+      }
+    };
   });
 })();
