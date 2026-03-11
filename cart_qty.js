@@ -89,10 +89,8 @@
 
         if (e.target.checked) {
           button.removeAttribute("disabled");
-          button.classList.remove("disabled");
         } else {
           button.setAttribute("disabled", "true");
-          button.classList.add("disabled");
         }
       }
     });
