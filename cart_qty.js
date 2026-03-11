@@ -87,14 +87,13 @@
           return;
         }
 
-        window.dispatchEvent(
-          new CustomEvent("odoo-dialog", {
-            detail: {
-              title: "Hello",
-              body: "Dialog desde CDN",
-            },
-          }),
-        );
+        const root = document.querySelector("[data-owl-root]");
+        const env = root.__owl__.app.env;
+
+        env.services.dialog.add({
+          title: "Hello",
+          body: "Dialog externo",
+        });
 
         if (e.target.checked) {
           button.removeAttribute("disabled");
