@@ -3,7 +3,11 @@
 :root {
   --dropdown-link-active-color: black !important;
 }
-.btn-primary {
+.btn:disabled,
+.btn.o_wysiwyg_loader,
+.btn.disabled,
+fieldset:disabled .btn,
+fieldset.o_wysiwyg_loader .btn {
   --btn-disabled-opacity: 0.1 !important;
 }
 body {
