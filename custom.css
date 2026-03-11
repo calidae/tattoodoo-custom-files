@@ -2,6 +2,7 @@
 
 :root {
   --dropdown-link-active-color: black !important;
+  --btn-disabled-opacity: 0.1 !important;
 }
 body {
   background-color: #f0eee9;
