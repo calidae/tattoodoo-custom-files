@@ -68,10 +68,9 @@
   (function initTCCheckbox() {
     document.addEventListener("change", function (e) {
       if (e.target && e.target.id === "website_sale_tc_checkbox") {
-        var button =
-          document.querySelector("[name='o_payment_submit_button']") ||
-          document.getElementById("o_payment_submit_button") ||
-          document.querySelector(".o_payment_submit_button");
+        var button = document.querySelector(
+          "button[type='submit'][name='o_payment_submit_button']",
+        );
 
         LOG("TC checkbox cambiado:", e.target.checked, "Botón:", button);
 
