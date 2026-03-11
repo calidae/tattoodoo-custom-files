@@ -87,16 +87,14 @@
           return;
         }
 
-        odoo.require("@web/core/dialog/dialog", function (DialogModule) {
-          const Dialog = DialogModule.Dialog;
-
-          const env = owl.Component.env;
-
-          env.services.dialog.add(Dialog, {
-            title: "Título",
-            body: "Contenido del diálogo",
-          });
-        });
+        window.dispatchEvent(
+          new CustomEvent("odoo-dialog", {
+            detail: {
+              title: "Hello",
+              body: "Dialog desde CDN",
+            },
+          }),
+        );
 
         if (e.target.checked) {
           button.removeAttribute("disabled");
