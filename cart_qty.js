@@ -87,14 +87,6 @@
           return;
         }
 
-        const root = document.querySelector("[data-owl-root]");
-        const env = root.__owl__.app.env;
-
-        env.services.dialog.add({
-          title: "Hello",
-          body: "Dialog externo",
-        });
-
         if (e.target.checked) {
           button.removeAttribute("disabled");
         } else {
@@ -102,6 +94,26 @@
         }
       }
     });
+
+    // Alert si clica el botón con el checkbox desmarcado
+    document.addEventListener(
+      "click",
+      function (e) {
+        var button = e.target.closest(
+          "button[type='submit'][name='o_payment_submit_button']",
+        );
+        if (!button) return;
+
+        var checkbox = document.getElementById("website_sale_tc_checkbox");
+        if (checkbox && !checkbox.checked) {
+          e.preventDefault();
+          e.stopPropagation();
+          alert("Has d'acceptar els termes i condicions abans de continuar.");
+        }
+      },
+      true,
+    );
+
     LOG("TC checkbox listener (delegado) registrado ✅");
   })();
 
