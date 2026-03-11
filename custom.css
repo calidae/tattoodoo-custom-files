@@ -10,6 +10,11 @@ fieldset:disabled .btn,
 fieldset.o_wysiwyg_loader .btn {
   --btn-disabled-opacity: 0.1 !important;
 }
+
+.form-check-label a {
+  text-decoration: underline !important;
+}
+
 body {
   background-color: #f0eee9;
 }
