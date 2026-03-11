@@ -83,22 +83,35 @@
         observer.observe(document.body, { childList: true, subtree: true });
       }
 
-      var checkbox = document.getElementById("website_sale_tc_checkbox");
-      var button = document.getElementsByName("o_payment_submit_button")[0];
+      // --- T&C checkbox → habilitar/deshabilitar botón de pago ---
+      function bindCheckbox() {
+        var checkbox = document.getElementById("website_sale_tc_checkbox");
+        var button =
+          document.getElementsByName("o_payment_submit_button")[0] ||
+          document.getElementById("o_payment_submit_button");
 
-      if (!checkbox || !button) {
-        console.warn("No se encontró el checkbox o el botón");
-        return;
+        if (!checkbox || !button) return false;
+        if (checkbox.dataset.bound) return true; // ya vinculado
+
+        checkbox.dataset.bound = "1";
+        checkbox.addEventListener("change", function () {
+          LOG("Checkbox cambiado:", checkbox.checked);
+          if (checkbox.checked) {
+            button.removeAttribute("disabled");
+          } else {
+            button.setAttribute("disabled", "true");
+          }
+        });
+        return true;
       }
 
-      checkbox.onchange = function () {
-        console.log("Checkbox cambiado:", checkbox.checked);
-        if (checkbox.checked) {
-          button.removeAttribute("disabled");
-        } else {
-          button.setAttribute("disabled", "true");
-        }
-      };
+      // Intentar vincular ahora y también cuando Odoo re-renderice
+      if (!bindCheckbox()) {
+        var tcObserver = new MutationObserver(function () {
+          if (bindCheckbox()) tcObserver.disconnect();
+        });
+        tcObserver.observe(document.body, { childList: true, subtree: true });
+      }
     }, 500);
   });
   document.addEventListener("DOMContentLoaded", function () {
