@@ -84,7 +84,7 @@
       }
 
       var checkbox = document.getElementById("website_sale_tc_checkbox");
-      var button = document.getElementById("o_payment_submit_button");
+      var button = document.getElementsByName("o_payment_submit_button")[0];
 
       if (!checkbox || !button) {
         console.warn("No se encontró el checkbox o el botón");
