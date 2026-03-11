@@ -50,36 +50,6 @@
     // Primera passada immediata
     lockCartQuantities();
 
-    // --- T&C checkbox → habilitar/deshabilitar botón de pago ---
-    function bindCheckbox() {
-      var checkbox = document.getElementById("website_sale_tc_checkbox");
-      var button =
-        document.getElementsByName("o_payment_submit_button")[0] ||
-        document.getElementById("o_payment_submit_button");
-
-      if (!checkbox || !button) return false;
-      if (checkbox.dataset.bound) return true; // ya vinculado
-
-      checkbox.dataset.bound = "1";
-      checkbox.addEventListener("change", function () {
-        LOG("Checkbox cambiado:", checkbox.checked);
-        if (checkbox.checked) {
-          button.removeAttribute("disabled");
-        } else {
-          button.setAttribute("disabled", "true");
-        }
-      });
-      return true;
-    }
-
-    // Intentar vincular ahora y también cuando Odoo re-renderice
-    if (!bindCheckbox()) {
-      var tcObserver = new MutationObserver(function () {
-        if (bindCheckbox()) tcObserver.disconnect();
-      });
-      tcObserver.observe(document.body, { childList: true, subtree: true });
-    }
-
     LOG("Observer iniciat ✅");
   }
 
@@ -91,6 +61,43 @@
       startObserver();
     }
     window.addEventListener("load", startObserver);
+  })();
+
+  // --- T&C checkbox → habilitar/deshabilitar botón de pago ---
+  // Usa event delegation: no importa si Odoo re-renderiza el botón
+  (function initTCCheckbox() {
+    document.addEventListener("change", function (e) {
+      if (e.target && e.target.id === "website_sale_tc_checkbox") {
+        var button =
+          document.querySelector("[name='o_payment_submit_button']") ||
+          document.getElementById("o_payment_submit_button") ||
+          document.querySelector(".o_payment_submit_button");
+
+        LOG("TC checkbox cambiado:", e.target.checked, "Botón:", button);
+
+        if (!button) {
+          LOG("⚠️ Botón de pago no encontrado. Selectores disponibles:");
+          LOG(
+            "  [name]:",
+            document.querySelectorAll("[name*='payment']").length,
+          );
+          LOG(
+            "  .o_payment:",
+            document.querySelectorAll("[class*='o_payment']").length,
+          );
+          return;
+        }
+
+        if (e.target.checked) {
+          button.removeAttribute("disabled");
+          button.classList.remove("disabled");
+        } else {
+          button.setAttribute("disabled", "true");
+          button.classList.add("disabled");
+        }
+      }
+    });
+    LOG("TC checkbox listener (delegado) registrado ✅");
   })();
 
   document.addEventListener("DOMContentLoaded", function () {
