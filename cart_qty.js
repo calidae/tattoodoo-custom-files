@@ -87,9 +87,15 @@
           return;
         }
 
-        this.env.services.dialog.add(Dialog, {
-          title: "Hello",
-          body: "Esto es un diálogo en Odoo",
+        odoo.require("@web/core/dialog/dialog", function (DialogModule) {
+          const Dialog = DialogModule.Dialog;
+
+          const env = owl.Component.env;
+
+          env.services.dialog.add(Dialog, {
+            title: "Título",
+            body: "Contenido del diálogo",
+          });
         });
 
         if (e.target.checked) {
