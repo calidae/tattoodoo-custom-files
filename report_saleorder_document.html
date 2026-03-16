@@ -50,14 +50,12 @@
                     </div>
                     <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
                         <div class="col-6">
-                            <strong class="d-block mt-3">Dirección de envío</strong>
+                            <strong class="d-block">Dirección de envío</strong>
+                            <div class="mb-0" t-if="doc.partner_shipping_id.name">
+                                <span t-field="doc.partner_shipping_id.name" />
+                            </div>
                             <div t-field="doc.partner_shipping_id"
-                                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
-                            <p t-if="doc.partner_shipping_id.vat" class="mb-0">
-                                <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
-                                    t-out="doc.company_id.account_fiscal_country_id.vat_label" />
-                                <t t-else="">NIF</t>: <span t-field="doc.partner_shipping_id.vat" />
-                            </p>
+                                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
                         </div>
                     </t>
                 </div>
