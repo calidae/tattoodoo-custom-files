@@ -470,7 +470,6 @@ Product details
 
 .navbar-light {
   background-color: rgba(255, 255, 255, 0.5) !important;
-  /* backdrop-filter: blur(10px); */
 }
 
 .dropdown-item.active,
