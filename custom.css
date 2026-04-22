@@ -325,10 +325,10 @@ html[lang="pt-PT"] #product_details .oe_price::after {
   color: #000 !important;
 }
 
-/* header .o_main_nav {
+header .o_main_nav {
   flex-direction: column-reverse !important;
   display: flex !important;
-} */
+}
 
 .o_header_sales_one_bot {
   background-color: #000 !important;
@@ -470,7 +470,7 @@ Product details
 
 .navbar-light {
   background-color: rgba(255, 255, 255, 0.5) !important;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .dropdown-item.active,
@@ -482,13 +482,13 @@ Product details
   --btn-color: #000 !important;
   --btn-border-color: #000 !important;
 }
-/* .o_header_mobile_buttons_wrap {
+.o_header_mobile_buttons_wrap {
   position: absolute;
   right: 3rem;
   top: 1.5rem;
-} */
-/* .navbar-toggler-icon {
+}
+.navbar-toggler-icon {
   position: absolute;
   right: 1rem;
   top: 2rem;
-} */
+}
