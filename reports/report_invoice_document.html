@@ -230,7 +230,9 @@
                                         t-value="line.get_column_to_exclude_for_colspan_calculation(line.tax_ids)" />
                                     <t t-if="is_product" name="account_invoice_line_accountable">
                                         <td name="account_invoice_line_name" t-att-class="padding_class">
-                                            <span t-if="line.product_id" t-field="line.product_id.name"
+                                            <span t-if="line.sale_line_ids"
+                                                t-esc="line.sale_line_ids[:1].name">Hamburguesa de tocino</span>
+                                            <span t-elif="line.product_id" t-field="line.product_id.name"
                                                 t-options="{'widget': 'text'}">Hamburguesa de tocino</span>
                                             <span t-if="line.product_id.intrastat_code_id"
                                                 t-field="line.product_id.intrastat_code_id.display_name"
